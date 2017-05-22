@@ -38,7 +38,18 @@ From analyzing these question-answer pairs, we found some noise and unnecessary 
 Because we want to process all the questions by users, we tokenize every question in our data. The tokenization process included separating alphanumeric with non-alphanumeric. Then separating alphanumeric with numeric. 
 
 To evaluate the quality of our model. We manually annotated or data to label keyphrases in 416 questions. In this work, we use "IOB" tagging scheme to label every word \cite{collobert2011natural}. In Table X, we give an example sequence with labels for each word. The statistical information of the dataset can be seen in Table X
-
+\begin{table}
+	\caption{Statistical information of dataset. W, K, $\bar{N}_{w}$, $\bar{N}_{k}$ are the total of words, number of keyphrases, average number of words, and average number of keyphrases in each question, respectively.}
+	\label{tab:descriptive_stats}
+	\begin{tabular}{lcccc}
+		\toprule
+		#questions&W&K&$\bar{N}_{w}$&$\bar{N}_{k}$\\
+		\midrule
+		416 & 26747  & 64.76 & 1861 & 4.49 \\
+		
+		\bottomrule
+	\end{tabular}
+\end{table}
 \subsection{TASK DEFINITIONS}
 \subsection{MODEL ARCHITECTURE}
 We process the sequences word by word. Features are extracted from every word as the input representation of the model. The output for this words are label which describe a word is either part of keyphrase or not.
