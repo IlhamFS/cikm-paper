@@ -54,28 +54,72 @@ We also experimented on customizing the way we input the features underneath our
 \end{equation}
 Where $W_{i}$ are the weight for each feature and $F_{i}$ are the extracted feature in vector form.
 \section{EXPERIMENTS}
-We mainly evaluated and analyzed our system on 416 manually annotated Indonesian medical questions.
-\subsubsection{FEATURE ABLATION STUDY}
-In this part, perform a feature ablation study. By considering all the features, and then removing one of these features, we want to estimate the importance of the features. To the experiment. We use 80\% as training set, and 20\% as a testing set. We used precision (P), recall (R), and F1-score (F1) as evaluation metrics. Table X show the experimental result. Then, we use LSTM as evaluation model because it is the most simple architecture. These are the following features we proposed: word stickiness (Ws), word abbreviation and acronym (Wa), Medical Entities (Me), Word Location (Wp), Word Length (Wl), Word Importance (Wi), POS tag (Pt), Medical Dictionary (Md).
+In this section, we analyzed the importance of our features by conducting a feature ablation study. Furthermore, we also established a scenario to test the performance of our model.
+\subsection{Feature Ablation Study}
+In this part, perform a feature ablation study. By considering all the features, and then removing one of these features, we want to estimate the importance of the features. To the experiment. We use 80\% as training set, and 20\% as a testing set. We used precision (P), recall (R), and F1-score (F1) as evaluation metrics. Table \ref{tab:ablation} show the experimental result. Then, we use LSTM as evaluation model because it is the most simple architecture. These are the following features we proposed: word stickiness (Ws), word abbreviation and acronym (Wa), Medical Entities (Me), Word Location (Wp), Word Length (Wl), Word Importance (Wi), POS tag (Pt), Medical Dictionary (Md).
 
 \begin{table*}
 	\caption{Feature Ablation Study Result}
 	\label{tab:ablation}
-	\begin{tabular}{cccl}
+	\begin{tabular}{lccc}
 		\toprule
 		Features&Precision&Recall&F-Measure\\
 		\midrule
-		Ws + Wa + Me + Wp + Wl + Wi + Pt + Md & 1 in 1,000& For Swedish names&hehe\\
-		$\pi$ & 1 in 5& Common in math&hehe\\
-		\$ & 4 in 5 & Used in business&hehe\\
-		$\Psi^2_1$ & 1 in 40,000& Unexplained usage&hehe\\
+			We + Ws + Wa + Me + Wp + Wl + Wi + Pt + Md & 79.93\% & 57.45\% & 66.85\% \\
+			
+			Ws + Wa + Me + Wp + Wl + Wi + Pt + Md & 84.01\% & 75.79\% & 79.69\% \\
+			
+			We + Wa + Me + Wp + Wl + Wi + Pt + Md & 76.39\% & 73.59\% & 74.96\% \\
+			
+			We + Ws + Me + Wp + Wl + Wi + Pt + Md & 78.44\% & 73.83\% & 76.07\% \\
+			
+			We + Ws + Wa + Wp + Wl + Wi + Pt + Md & 79.38\% & 76.28\% & 77.8\% \\
+			
+			We + Ws + Wa + Me + Wl + Wi + Pt + Md & 74.24\% & 78.23\% & 76.19\% \\
+			
+			We + Ws + Wa + Me + Wp + Wi + Pt + Md & 75.36\% & 76.28\% & 75.82\% \\
+			
+			We + Ws + Wa + Me + Wp + Wl + Pt + Md & 83.69\% & 75.3\% & 79.27\% \\
+			
+			We + Ws + Wa + Me + Wp + Wl + Wi + Md & 79.68\% & 74.81\% & 77.17\% \\
+			
+			We + Ws + Wa + Me + Wp + Wl + Wi + Pt & 75.66\% & 76.03\% & 75.85\% \\
 		\bottomrule
 	\end{tabular}
 \end{table*}
 
 
-The experimental results in Table X shows that every feature has a positive contribution to the model. It is shown by iteratively remove each feature one by one and every time we remove a feature, F-1 score dropped. Hence, we use every feature to train our model in the next experiments.
-Table X shows the performances of different methods.
+The experimental results in Table \ref{tab:ablation} shows that every feature has a positive contribution to the model. It is shown by iteratively remove each feature one by one and every time we remove a feature, F-1 score always dropped. Hence, we use every feature to train our model in the next experiments.
+\subsection{Model Scenario}
+We created a scenario to evaluate the performance of our model. In this scenario, we also compared our model to an unsupervised learning algorithm using RAKE. Moreover, we also implemented CRF to as a baseline for this sequence labeling task. CRF also has been proven effective in extracting keyphrases \cite{cao2010automatically} \cite{zhang2008automatic}. The following scenarios are listed below:
+\begin{itemize}
+	\item RAKE
+	\item CRF
+	\item B-LSTM
+	\item CNN-B-LSTM
+	\item Weighting-CNN-B-LSTM
+\end{itemize}
+The result of the scenario can be seen in Table \ref{tab:model_scenario}.
+\begin{table}
+	\caption{Model Scenario Result}
+	\label{tab:model_scenario}
+	\begin{tabular}{lccc}
+		\toprule
+		Models&Precision&Recall&F-Measure\\
+		\midrule
+			RAKE & 43.24\% & 68.19\% & 52.90\% \\
+			
+			CRF & 63.44\% & 64.94\% & 62.52\% \\
+			
+			LSTM & 78.77\% & 79.71\% & 79.16\% \\
+			
+			B-LSTM & 81.88\% & 83.05\% & 82.37\% \\
+			
+			CNN-B-LSTM & 82.00\% & 82.99\% & 82.41\% \\
+	
+		\bottomrule
+	\end{tabular}
+\end{table}
 \section{INI CONTOH}
 \subsection{Type Changes and {\itshape Special} Characters}
 
