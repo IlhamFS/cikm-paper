@@ -1,0 +1,87 @@
+This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: sample-sigconf.aux
+The style file: ACM-Reference-Format.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Database file #1: sigproc.bib
+Warning--entry type for "skripsiWahid" isn't style-file defined
+--line 187 of file sigproc.bib
+Warning--entry type for "skripsiKakRadit" isn't style-file defined
+--line 461 of file sigproc.bib
+Warning--I didn't find a database entry for "Lamport:LaTeX"
+Warning--I didn't find a database entry for "bowman:reasoning"
+Warning--I didn't find a database entry for "clark:pct"
+Warning--I didn't find a database entry for "braams:babel"
+Warning--I didn't find a database entry for "herlihy:methodology"
+Warning--I didn't find a database entry for "salas:calculus"
+Warning--I didn't find a database entry for "Fear05"
+Warning--I didn't find a database entry for "Amsthm15"
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Warning--empty publisher in classDocumentEkp1
+Warning--empty address in classDocumentEkp1
+Warning--no number and no volume in ma2016end
+Warning--page numbers missing in both pages and numpages fields in ma2016end
+Warning--empty publisher in marujoMAUI
+Warning--empty address in marujoMAUI
+Warning--empty publisher in surveyPopulerTerbaruEkp
+Warning--empty address in surveyPopulerTerbaruEkp
+Warning--empty booktitle in mihalcea2004textrank
+Warning--empty publisher in mihalcea2004textrank
+Warning--empty address in mihalcea2004textrank
+Warning--page numbers missing in both pages and numpages fields in mihalcea2004textrank
+Warning--empty publisher in qaEkp
+Warning--empty address in qaEkp
+Warning--no number and no volume in rake
+Warning--no number and no volume in ekpMedicalDocumentHybrid
+Warning--page numbers missing in both pages and numpages fields in ekpMedicalDocumentHybrid
+Warning--no number and no volume in ekpNeuralNetworks
+Warning--page numbers missing in both pages and numpages fields in ekpNeuralNetworks
+Warning--empty publisher in witten1999kea
+Warning--empty address in witten1999kea
+Warning--empty publisher in zhang2016keyphrase
+Warning--empty address in zhang2016keyphrase
+Warning--empty publisher in SMRzhou2015end
+Warning--empty address in SMRzhou2015end
+You've used 22 entries,
+            5706 wiz_defined-function locations,
+            1453 strings with 19538 characters,
+and the built_in function-call counts, 24378 in all, are:
+= -- 3218
+> -- 941
+< -- 0
++ -- 290
+- -- 324
+* -- 1658
+:= -- 2537
+add.period$ -- 111
+call.type$ -- 22
+change.case$ -- 154
+chr.to.int$ -- 22
+cite$ -- 47
+duplicate$ -- 1926
+empty$ -- 1413
+format.name$ -- 384
+if$ -- 6055
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 84
+newline$ -- 208
+num.names$ -- 176
+pop$ -- 893
+preamble$ -- 1
+purify$ -- 264
+quote$ -- 0
+skip$ -- 716
+stack$ -- 0
+substring$ -- 1638
+swap$ -- 184
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 506
+warning$ -- 25
+while$ -- 175
+width$ -- 0
+write$ -- 405
+(There were 35 warnings)

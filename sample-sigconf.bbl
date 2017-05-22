@@ -1,0 +1,305 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{00}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[\protect\citeauthoryear{Cao, Cimino, Ely, and Yu}{Cao
+  et~al\mbox{.}}{2010}]%
+        {cao2010automatically}
+\bibfield{author}{\bibinfo{person}{Yong-gang Cao}, \bibinfo{person}{James~J
+  Cimino}, \bibinfo{person}{John Ely}, {and} \bibinfo{person}{Hong Yu}.}
+  \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{Automatically extracting information needs from
+  complex clinical questions}.
+\newblock \bibinfo{journal}{{\em Journal of biomedical informatics\/}}
+  \bibinfo{volume}{43}, \bibinfo{number}{6} (\bibinfo{year}{2010}),
+  \bibinfo{pages}{962--971}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Collobert, Weston, Bottou, Karlen,
+  Kavukcuoglu, and Kuksa}{Collobert et~al\mbox{.}}{2011}]%
+        {collobert2011natural}
+\bibfield{author}{\bibinfo{person}{Ronan Collobert}, \bibinfo{person}{Jason
+  Weston}, \bibinfo{person}{L{\'e}on Bottou}, \bibinfo{person}{Michael Karlen},
+  \bibinfo{person}{Koray Kavukcuoglu}, {and} \bibinfo{person}{Pavel Kuksa}.}
+  \bibinfo{year}{2011}\natexlab{}.
+\newblock \showarticletitle{Natural language processing (almost) from scratch}.
+\newblock \bibinfo{journal}{{\em Journal of Machine Learning Research\/}}
+  \bibinfo{volume}{12}, \bibinfo{number}{Aug} (\bibinfo{year}{2011}),
+  \bibinfo{pages}{2493--2537}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Gong and Liu}{Gong and Liu}{2009}]%
+        {gong2009improving}
+\bibfield{author}{\bibinfo{person}{Zhiguo Gong} {and} \bibinfo{person}{Qian
+  Liu}.} \bibinfo{year}{2009}\natexlab{}.
+\newblock \showarticletitle{Improving keyword based web image search with
+  visual feature distribution and term expansion}.
+\newblock \bibinfo{journal}{{\em Knowledge and Information Systems\/}}
+  \bibinfo{volume}{21}, \bibinfo{number}{1} (\bibinfo{year}{2009}),
+  \bibinfo{pages}{113--132}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Hammouda, Matute, and Kamel}{Hammouda
+  et~al\mbox{.}}{2005}]%
+        {classDocumentEkp1}
+\bibfield{author}{\bibinfo{person}{Khaled~M Hammouda}, \bibinfo{person}{Diego~N
+  Matute}, {and} \bibinfo{person}{Mohamed~S Kamel}.}
+  \bibinfo{year}{2005}\natexlab{}.
+\newblock \showarticletitle{Corephrase: Keyphrase extraction for document
+  clustering}. In \bibinfo{booktitle}{{\em International Workshop on Machine
+  Learning and Data Mining in Pattern Recognition}}. Springer,
+  \bibinfo{pages}{265--274}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Herwando}{Herwando}{2016}]%
+        {skripsiKakRadit}
+\bibfield{author}{\bibinfo{person}{Raditya Herwando}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \bibinfo{title}{Pengenalan Entitas Kesehatan pada Forum Kesehatan
+  Online Berbahasa Indonesia Menggunakan Algoritma Conditional Random Fields}.
+\newblock   (\bibinfo{date}{7} \bibinfo{year}{2016}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Ma and Hovy}{Ma and Hovy}{2016}]%
+        {ma2016end}
+\bibfield{author}{\bibinfo{person}{Xuezhe Ma} {and} \bibinfo{person}{Eduard
+  Hovy}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{End-to-end sequence labeling via bi-directional
+  lstm-cnns-crf}.
+\newblock \bibinfo{journal}{{\em arXiv preprint arXiv:1603.01354\/}}
+  (\bibinfo{year}{2016}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Marujo, Ling, Trancoso, Dyer, Black, Gershman,
+  de~Matos, da~Silva~Neto, and Carbonell}{Marujo et~al\mbox{.}}{2015}]%
+        {marujoMAUI}
+\bibfield{author}{\bibinfo{person}{Luis Marujo}, \bibinfo{person}{Wang Ling},
+  \bibinfo{person}{Isabel Trancoso}, \bibinfo{person}{Chris Dyer},
+  \bibinfo{person}{Alan~W Black}, \bibinfo{person}{Anatole Gershman},
+  \bibinfo{person}{David~Martins de Matos}, \bibinfo{person}{Jo{\~a}o~Paulo da
+  Silva~Neto}, {and} \bibinfo{person}{Jaime~G Carbonell}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Automatic Keyword Extraction on Twitter.}. In
+  \bibinfo{booktitle}{{\em ACL (2)}}. \bibinfo{pages}{637--643}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Medelyan}{Medelyan}{2009}]%
+        {medelyan2009human}
+\bibfield{author}{\bibinfo{person}{Olena Medelyan}.}
+  \bibinfo{year}{2009}\natexlab{}.
+\newblock {\em \bibinfo{title}{Human-competitive automatic topic indexing}}.
+\newblock \bibinfo{thesistype}{Ph.D. Dissertation}. \bibinfo{school}{The
+  University of Waikato}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Merrouni, Frikh, and Ouhbi}{Merrouni
+  et~al\mbox{.}}{2016}]%
+        {surveyPopulerTerbaruEkp}
+\bibfield{author}{\bibinfo{person}{Zakariae~Alami Merrouni},
+  \bibinfo{person}{Bouchra Frikh}, {and} \bibinfo{person}{Brahim Ouhbi}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Automatic keyphrase extraction: An overview of the
+  state of the art}. In \bibinfo{booktitle}{{\em Information Science and
+  Technology (CiSt), 2016 4th IEEE International Colloquium on}}. IEEE,
+  \bibinfo{pages}{306--313}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Mihalcea and Tarau}{Mihalcea and
+  Tarau}{2004}]%
+        {mihalcea2004textrank}
+\bibfield{author}{\bibinfo{person}{Rada Mihalcea} {and} \bibinfo{person}{Paul
+  Tarau}.} \bibinfo{year}{2004}\natexlab{}.
+\newblock \showarticletitle{TextRank: Bringing order into texts}. Association
+  for Computational Linguistics.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Moldovan, Harabagiu, Pasca, Mihalcea, Girju,
+  Goodrum, and Rus}{Moldovan et~al\mbox{.}}{2000}]%
+        {qaEkp}
+\bibfield{author}{\bibinfo{person}{Dan Moldovan}, \bibinfo{person}{Sanda
+  Harabagiu}, \bibinfo{person}{Marius Pasca}, \bibinfo{person}{Rada Mihalcea},
+  \bibinfo{person}{Roxana Girju}, \bibinfo{person}{Richard Goodrum}, {and}
+  \bibinfo{person}{Vasile Rus}.} \bibinfo{year}{2000}\natexlab{}.
+\newblock \showarticletitle{The structure and performance of an open-domain
+  question answering system}. In \bibinfo{booktitle}{{\em Proceedings of the
+  38th Annual Meeting on Association for Computational Linguistics}}.
+  Association for Computational Linguistics, \bibinfo{pages}{563--570}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Rohman}{Rohman}{2017}]%
+        {skripsiWahid}
+\bibfield{author}{\bibinfo{person}{Wahid~Nur Rohman}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \bibinfo{title}{Pengenalan Entitas Kesehatan pada Forum Kesehatan
+  Online dengan Menggunakan Recurrent Neural Networks}.
+\newblock   (\bibinfo{date}{1} \bibinfo{year}{2017}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Rose, Engel, Cramer, and Cowley}{Rose
+  et~al\mbox{.}}{2010}]%
+        {rake}
+\bibfield{author}{\bibinfo{person}{Stuart Rose}, \bibinfo{person}{Dave Engel},
+  \bibinfo{person}{Nick Cramer}, {and} \bibinfo{person}{Wendy Cowley}.}
+  \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{Automatic keyword extraction from individual
+  documents}.
+\newblock \bibinfo{journal}{{\em Text Mining\/}} (\bibinfo{year}{2010}),
+  \bibinfo{pages}{1--20}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Sarkar}{Sarkar}{2013}]%
+        {ekpMedicalDocumentHybrid}
+\bibfield{author}{\bibinfo{person}{Kamal Sarkar}.}
+  \bibinfo{year}{2013}\natexlab{}.
+\newblock \showarticletitle{A hybrid approach to extract keyphrases from
+  medical documents}.
+\newblock \bibinfo{journal}{{\em arXiv preprint arXiv:1303.1441\/}}
+  (\bibinfo{year}{2013}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Sarkar, Nasipuri, and Ghose}{Sarkar
+  et~al\mbox{.}}{2010}]%
+        {ekpNeuralNetworks}
+\bibfield{author}{\bibinfo{person}{Kamal Sarkar}, \bibinfo{person}{Mita
+  Nasipuri}, {and} \bibinfo{person}{Suranjan Ghose}.}
+  \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{A new approach to keyphrase extraction using neural
+  networks}.
+\newblock \bibinfo{journal}{{\em arXiv preprint arXiv:1004.3274\/}}
+  (\bibinfo{year}{2010}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Sparck~Jones}{Sparck~Jones}{1972}]%
+        {sparck1972statistical}
+\bibfield{author}{\bibinfo{person}{Karen Sparck~Jones}.}
+  \bibinfo{year}{1972}\natexlab{}.
+\newblock \showarticletitle{A statistical interpretation of term specificity
+  and its application in retrieval}.
+\newblock \bibinfo{journal}{{\em Journal of documentation\/}}
+  \bibinfo{volume}{28}, \bibinfo{number}{1} (\bibinfo{year}{1972}),
+  \bibinfo{pages}{11--21}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Turney}{Turney}{2000}]%
+        {turney2000learning}
+\bibfield{author}{\bibinfo{person}{Peter~D Turney}.}
+  \bibinfo{year}{2000}\natexlab{}.
+\newblock \showarticletitle{Learning algorithms for keyphrase extraction}.
+\newblock \bibinfo{journal}{{\em Information retrieval\/}} \bibinfo{volume}{2},
+  \bibinfo{number}{4} (\bibinfo{year}{2000}), \bibinfo{pages}{303--336}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Witten, Paynter, Frank, Gutwin, and
+  Nevill-Manning}{Witten et~al\mbox{.}}{1999}]%
+        {witten1999kea}
+\bibfield{author}{\bibinfo{person}{Ian~H Witten}, \bibinfo{person}{Gordon~W
+  Paynter}, \bibinfo{person}{Eibe Frank}, \bibinfo{person}{Carl Gutwin}, {and}
+  \bibinfo{person}{Craig~G Nevill-Manning}.} \bibinfo{year}{1999}\natexlab{}.
+\newblock \showarticletitle{KEA: Practical automatic keyphrase extraction}. In
+  \bibinfo{booktitle}{{\em Proceedings of the fourth ACM conference on Digital
+  libraries}}. ACM, \bibinfo{pages}{254--255}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zhang}{Zhang}{2008}]%
+        {zhang2008automatic}
+\bibfield{author}{\bibinfo{person}{Chengzhi Zhang}.}
+  \bibinfo{year}{2008}\natexlab{}.
+\newblock \showarticletitle{Automatic keyword extraction from documents using
+  conditional random fields}.
+\newblock \bibinfo{journal}{{\em Journal of Computational Information
+  Systems\/}} \bibinfo{volume}{4}, \bibinfo{number}{3} (\bibinfo{year}{2008}),
+  \bibinfo{pages}{1169--1180}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zhang, Wang, Gong, and Huang}{Zhang
+  et~al\mbox{.}}{2016}]%
+        {zhang2016keyphrase}
+\bibfield{author}{\bibinfo{person}{Qi Zhang}, \bibinfo{person}{Yang Wang},
+  \bibinfo{person}{Yeyun Gong}, {and} \bibinfo{person}{Xuanjing Huang}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Keyphrase extraction using deep recurrent neural
+  networks on Twitter}. In \bibinfo{booktitle}{{\em Proceedings of the 2016
+  Conference on Empirical Methods in Natural Language Processing}}.
+  \bibinfo{pages}{836--845}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zhang, Milios, and Zincir-Heywood}{Zhang
+  et~al\mbox{.}}{2007}]%
+        {zhang2007comparative}
+\bibfield{author}{\bibinfo{person}{Yongzheng Zhang}, \bibinfo{person}{Evangelos
+  Milios}, {and} \bibinfo{person}{Nur Zincir-Heywood}.}
+  \bibinfo{year}{2007}\natexlab{}.
+\newblock \showarticletitle{A comparative study on key phrase extraction
+  methods in automatic web site summarization}.
+\newblock \bibinfo{journal}{{\em Journal of Digital Information Management\/}}
+  \bibinfo{volume}{5}, \bibinfo{number}{5} (\bibinfo{year}{2007}),
+  \bibinfo{pages}{323}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zhou and Xu}{Zhou and Xu}{2015}]%
+        {SMRzhou2015end}
+\bibfield{author}{\bibinfo{person}{Jie Zhou} {and} \bibinfo{person}{Wei Xu}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{End-to-end learning of semantic role labeling using
+  recurrent neural networks.}. In \bibinfo{booktitle}{{\em ACL (1)}}.
+  \bibinfo{pages}{1127--1137}.
+\newblock
+
+
+\end{thebibliography}
