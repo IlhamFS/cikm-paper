@@ -21,7 +21,7 @@ In general, keyphrase extraction methods can be divided into two groups: unsuper
 
 In the work of \cite{sparck1972statistical}, they leverage TF-IDF to get the most significant words. Specifically, they utilize term frequency and the inverse of document frequency to rank terms in the document. First, this Rapid Automatic Keywords Extraction \cite{rake} uses stopwords to split a document into several candidate keyphrases. All candidates will be ranked by the degrees and frequencies of all words inside them. Finally, the rank points of each candidate is obtained by summing over all degrees and frequencies of all words contained in each keyphrase. RAKE is proven to be successful for extracting keyphrases in special documents such as paper and article \cite{rake}.
 
-There is also a popular graph-based approach, namely TextRank (U), i.e., a modified PageRank algorithm to extract keyphrases from a document. They exploit word co-occurrence information to build a document graph, in which a word serves as a node and co-occurence information determines an edge between two nodes (words). After they build the graph, they actually run PageRank algorithm to determine the keywordness score for each node in the graph. A word with high PageRank value denotes that its related concept can be found in many location inside the document, which means that it is a good candidate for keyword. After that, keyphrases can be obtained using post-processing step that may combine contiguous candidates into one keyphrase.
+There is also a popular graph-based approach, namely TextRank (U), i.e., a modified PageRank algorithm to extract keyphrases from a document. They exploit word co-occurrence information to build a document graph, in which a word serves as a vertice and co-occurence information determines an edge between two vertices (words). After they build the graph, they actually run PageRank algorithm to determine the keywordness score for each vertice in the graph. A word with high PageRank value denotes that its related concept can be found in many location inside the document, which means that it is a good candidate for keyword. After that, keyphrases can be obtained using post-processing step that may combine contiguous candidates into one keyphrase.
 
 One of the earlier supervised approaches in the problem of keyphrase extraction is KEA \cite{witten1999kea}. KEA uses tf-idf and first occurrence of the term to identify candidate keyphrases. They use a machine-learning algorithm (i.e., Naive Bayes) to predict whether or not a candidate is a good keyphrase. \cite{medelyan2009human} developed a system called MAUI that can extract keyphrases using trained corpus and controlled vocabulary. MAUI itself is an improvement to the aforementioned supervised model, KEA. Furthermore, \cite{marujoMAUI} use word embedding and brown clustering as features. Their experiment result had shown that the proposed features and MAUI performs better than statistical methods, such as simple tf-idf approach.
 
@@ -33,7 +33,7 @@ Unfortunately, there are limited works regarding the task of keyphrase extractio
 \subsection{DATA AND ANNOTATION}
 To analyze the effectiveness of our model for keyphrase extraction in user-generated medical domain, we constructed an evaluation dataset. A a number of questions was gathered from Indonesian medical question answering forum. The data was crawled by \cite{skripsiKakRadit} and \cite{skripsiWahid} in their experiment. Generally, we gathered 416 question-answer pairs from \cite{skripsiKakRadit} and \cite{skripsiWahid}. We decided to use the same question-answers pairs to observe our keyphrases and medical entities that has been annotated by them. In addition, system for recognizing medical entities is not fully build, by using the same document we can use the annotated medical entities as our feature.
 
-From analyzing these question-answer pairs, we found some noise and unnecessary information. Question and answer have different main topic and focus. Moreover, we are focusing our task for getting user intentions and needs in our experiment. Based on that problem, we only use questions by users and remove answers by the doctors because it would be a better representation of user intentions and needs. There is also unnecessary information such as URL and email. We replace URL with “URL”  and email with “email” since we were focusing on textual content. Moreover, we also removed ads and spam in the data we gathered.
+From analyzing these question-answer pairs, we found some noise and unnecessary information. Question and answer have different main topic and focus. Moreover, we are focusing our task for getting user intentions and needs in our experiment. Based on that problem, we only use questions by users and remove answers by the doctors because it would be a better representation of user intentions and needs. There is also unnecessary information such as URL and email. We replace URL with "URL"  and email with "email" since we were focusing on textual content. Moreover, we also removed ads and spam in the data we gathered.
 
 Because we want to process all the questions by users, we tokenize every question in our data. The tokenization process included separating alphanumeric with non-alphanumeric. Then separating alphanumeric with numeric. 
 
@@ -43,7 +43,7 @@ To evaluate the quality of our model. We manually annotated or data to label key
 	\label{tab:descriptive_stats}
 	\begin{tabular}{lcccc}
 		\toprule
-		#questions&W&K&$\bar{N}_{w}$&$\bar{N}_{k}$\\
+		\#questions&W&K&$\bar{N}_{w}$&$\bar{N}_{k}$\\
 		\midrule
 		416 & 26747  & 64.76 & 1861 & 4.49 \\
 		
@@ -51,21 +51,60 @@ To evaluate the quality of our model. We manually annotated or data to label key
 	\end{tabular}
 \end{table}
 \subsection{TASK DEFINITIONS}
+
+\subsection{FEATURES}
+Because the small dataset that we have, our model would have a small learning material and an end-to-end approach might not work well. As a result, We leveraged nine handcrafted features that help the model in learning.
+\subsubsection{Word embedding\\}
+In the experiments, we use word embedding as input to the neural network. A skip-gram model \cite{mikolov2013wordembed} was used to generate these 128-dimensional vectors for documents in evaluation data. The dimension of the vector were chosen based on \cite{skripsiWahid} experiment. The word embeddings we used in this work were trained using a document that we gathered from Indonesia online forum, medical article, and medical question answering forum. 
+
+\subsubsection{Medical Dictionary\\}
+In our experiment, we leveraged a medical knowledge base feature using a medical dictionary. Our medical dictionary contains a list of symptom, disease, treatment, and drug in the Indonesian language. The rationale behind this feature is intentions and needs of patients is more focused on their disease, symptom, treatment, and drug. Based on this feature, we classified words by their appearance in the medical dictionary. The dictionary was built by combining three dictionaries from \cite{skripsiKakAbid} research. The original dictionaries contained disease, symptom, treatment, and drug separately in each dictionary.
+
+\subsubsection{Word Length\\}
+This feature represents the length of each word (i.e., the number of characters in every word). This feature is based on \cite{cao2010automatically} research on keyphrase extraction in medical question who added word length as a feature because domain-specific words (e.g. "tuberculosis") tend to be lengthy when compared to common English words, and there is a correlation between the length of a word and its IDF value \citep{cao2010automatically}. Thus we use the same feature for Indonesian language.
+
+\subsubsection{Word Position\\}
+We also adapted word position as feature based on \cite{cao2010automatically}research. Based on their observation, an important term sometimes appears toward the end of a clinical question. For example, "medicine for bell’s palsy" appear towards the end of question "what is the best medicine for bell’s palsy?". 
+
+\subsubsection{POS-tag\\}
+POS-tag of words was also added as our feature. POS-tag may give model grammatical information and a better understanding of ambiguous words. By our observation, many keyphrases have a common POS pattern. For example, "treatment\_Noun for\_Preposition cancer\_Noun", "therapy\_Noun for\_Preposition headache\_Noun". Moreover, \cite{skripsiWahid}, and \cite{abacha2011medical} have proven that POS tag feature has a positive contribution in sequence labeling task in Indonesian medical domain such as Medical Entities Recognizer (MER).
+
+\subsubsection{Medical Entity\\}
+We use medical entity which annotated by \cite{skripsiWahid}. By our observation, medical entities are sometimes part of keyphrases. Furthermore, medical entities can provide more information about drug or disease which not available in training data or a medical dictionary.
+
+\subsubsection{Abbreviation and Acronym\\}
+We also identified words by their appearance in abbreviation or acronym dictionary gathered by \cite{skripsiKakAbid}. We observed that important word may not be shortened by the users, such as "cancer", "flu", "bell’s palsy".
+
+\subsubsection{Word Importance\\}
+We also leveraged a word importance feature. The purpose of this feature is to rank words in a document by their importance. The "keywordness" value of a word can be determined by the importance value. To extract this feature, we adapted a method from TextRank \cite{mihalcea2004textrank} algorithm for ranking words in a document. They represent words as vertices in graph and the distance between words as edges. However, in building an undirected graph, we use a word similarity by using our trained word embedding model. Two words have a connected edge, if their similarity is not negative. The weight of the edge is the similarity itself. Moreover, we use a modified PageRank \cite{page1999pagerank} algorithm that consider edges weight in the calculation. Formally, let $G = (V, E)$ be an undirected graph with the set of vertices V and set of edges E, where E is a subset of $VxV$. For a given vertex $V_i$ let $In(V_i)$ be the set of vertices that point to it (predecessors), and let $Out(V_i)$ be the set of vertices that vertex $V_i$ points to (successors). The modified PageRank formula that proposed by \cite{mihalcea2004textrank} can be seen in Formula \ref{eq:pagerank}.
+\begin{equation}\label{eq:pagerank}
+	WS(V_{i})=(1-d) + d * \sum_{V_{i} \in In(V_{i})} \frac{w_{ji}}{\sum_{V_{i} \in Out(V_{j})}}w_{jk}
+\end{equation}
+
+\subsubsection{Word Stickiness\\}
+As a keyphrase, a sequence must be in a valid order. There is some noise such as misuse punctuation by users. For example, "Saya mengalami pusing pada jidat sakit perut dan pandangan kabur (I am having a headache on forehead stomachache and blurred vision)", there is no comma between "jidat (forehead)", "sakit perut (stomachache)" and "dan (and)". Our model may mistake the sequence "(jidat sakit perut)forehead stomachache" as a keyphrase. Based on that problem, we propose a feature that may capture how likely of a given word is occurred together with the word before and after. We use Pointwise Mutual Information (PMI) of a bigram probability to capture the likeness. This feature represented as two dimensional vector $v = [x1, x2]$, with $x_1$ is the PMI with the word before and $x_2$ is the PMI with the word after. Formula \ref{eq:pmi} is the formula for calculating the PMI value. In that formula, $p(x)$ is the occurrence probability of word $x$, $p(y)$ is the occurrence probability of word $y$, and $p(x, y)$ is the probability of word $x$ and $y$ co-occur together.
+\begin{equation}\label{eq:pmi}
+	PMI(x,y)=log(\frac{p(x, y)}{p(x)*p(y)})
+\end{equation} 
 \subsection{MODEL ARCHITECTURE}
 We process the sequences word by word. Features are extracted from every word as the input representation of the model. The output for this words are label which describe a word is either part of keyphrase or not.
 
-To give our model a better insight of context, we introduce Convolutional Neural Networks (CNNs) to capture context from three adjacent words.  From our observation, to know whether a word is part of keyphrase or not, we need to know the context of the word itself. For example, “Doc, i have a frequent back pain. What happen?”. The keyphrase for previous example is “frequent back pain”. In order to know that “back” is part of keyphrase, we need information from the word “frequent” which give an intensity of a symptom and “pain” which refer to “back pain” as main term. With CNNs, we argue that our model can capture the surrounding information of a word.
+To give our model a better insight of context, we introduce Convolutional Neural Networks (CNNs) to capture context from three adjacent words.  From our observation, to know whether a word is part of keyphrase or not, we need to know the context of the word itself. For example, "Doc, i have a frequent back pain. What happen?". The keyphrase for previous example is "frequent back pain". In order to know that "back" is part of keyphrase, we need information from the word "frequent" which give an intensity of a symptom and "pain" which refer to "back pain" as main term. With CNNs, we argue that our model can capture the surrounding information of a word.
 
-To get a better inference, information from the past and future sequences can be integrated. This approach is proven effective  in sequence labeling task such as semantic role labeling \cite{SMRzhou2015end} and named entity recognition \cite{ma2016end}. Hence, we utilized  bi-directional LSTM (B-LSTM) for extracting structural knowledge by processing sequences both forward and backward.
+To get a better inference, information from the past and future sequences can be integrated. This approach is proven effective  in sequence labeling task such as semantic role labeling \cite{SMRzhou2015end} and named entity recognition \cite{ma2016end}. Hence, we utilized  bi-directional LSTM (B-LSTM) for extracting structural knowledge by processing sequences both forward and backward. We build up to two layers of B-LSTM.
 To perform the sequence tagging task, we build a fully connected layer in the top of our model. This layer will classify the output of our model with softmax activation function.
 
 We also experimented on customizing the way we input the features underneath our aforementioned networks. Instead of concatenating all feature into one vector, we tried to give weight for every feature we have. We argue that each feature have different contribution to the model. In order to do so, we create a new layer underneath our model to do the weighting scenario. The following equation to weight all feature can be seen in below:
 \begin{equation}
-	Z =  tanh(W _{1}*F_{1} + W_{2}*F_{2} + .. + W_{n}*F_{n})
+Z =  tanh(W _{1}*F_{1} + W_{2}*F_{2} + .. + W_{n}*F_{n})
 \end{equation}
 Where $W_{i}$ are the weight for each feature and $F_{i}$ are the extracted feature in vector form.
 \section{EXPERIMENTS}
 In this section, we analyzed the importance of our features by conducting a feature ablation study. Furthermore, we also established a scenario to test the performance of our model.
+\subsection{Evaluation}
+One of the evaluation that we use in our work is using partial evaluation. This evaluation is used because we treat keyphrases as sequences of words. Thus we can use partial evaluation which is used to evaluate Named Entity Recognition system. In partial evaluation method, a assigned keyphrase is predicted correctly if a predicted keyphrase has a word which is a subset in assigned keyphrase words. 
+
+We use Recall, Precision, and F1 score as our evaluation parameters. Recall shows the number of correctly predicted keyphrases divided by the the total number of assigned keyphrases and Precision is the number of correctly predicted keyphrase divided by the total number of predicted keyphrases. To calculate F1 score we use Recall and Precision as parameters which is 2  Recall  Precision/ (Recall + Precision).
 \subsection{Feature Ablation Study}
 In this part, perform a feature ablation study. By considering all the features, and then removing one of these features, we want to estimate the importance of the features. To the experiment. We use 80\% as training set, and 20\% as a testing set. We used precision (P), recall (R), and F1-score (F1) as evaluation metrics. Table \ref{tab:ablation} show the experimental result. Then, we use LSTM as evaluation model because it is the most simple architecture. These are the following features we proposed: word stickiness (Ws), word abbreviation and acronym (Wa), Medical Entities (Me), Word Location (Wp), Word Length (Wl), Word Importance (Wi), POS tag (Pt), Medical Dictionary (Md).
 
@@ -76,25 +115,25 @@ In this part, perform a feature ablation study. By considering all the features,
 		\toprule
 		Features&Precision&Recall&F-Measure\\
 		\midrule
-			We + Ws + Wa + Me + Wp + Wl + Wi + Pt + Md & 79.93\% & 57.45\% & 66.85\% \\
-			
-			Ws + Wa + Me + Wp + Wl + Wi + Pt + Md & 84.01\% & 75.79\% & 79.69\% \\
-			
-			We + Wa + Me + Wp + Wl + Wi + Pt + Md & 76.39\% & 73.59\% & 74.96\% \\
-			
-			We + Ws + Me + Wp + Wl + Wi + Pt + Md & 78.44\% & 73.83\% & 76.07\% \\
-			
-			We + Ws + Wa + Wp + Wl + Wi + Pt + Md & 79.38\% & 76.28\% & 77.8\% \\
-			
-			We + Ws + Wa + Me + Wl + Wi + Pt + Md & 74.24\% & 78.23\% & 76.19\% \\
-			
-			We + Ws + Wa + Me + Wp + Wi + Pt + Md & 75.36\% & 76.28\% & 75.82\% \\
-			
-			We + Ws + Wa + Me + Wp + Wl + Pt + Md & 83.69\% & 75.3\% & 79.27\% \\
-			
-			We + Ws + Wa + Me + Wp + Wl + Wi + Md & 79.68\% & 74.81\% & 77.17\% \\
-			
-			We + Ws + Wa + Me + Wp + Wl + Wi + Pt & 75.66\% & 76.03\% & 75.85\% \\
+		We + Ws + Wa + Me + Wp + Wl + Wi + Pt + Md & \textbf{84.01\%} & 75.79\% & \textbf{79.69\%} \\
+		
+		Ws + Wa + Me + Wp + Wl + Wi + Pt + Md & 79.93\% & 57.45\% & 66.85\% \\
+		
+		We + Wa + Me + Wp + Wl + Wi + Pt + Md & 76.39\% & 73.59\% & 74.96\% \\
+		
+		We + Ws + Me + Wp + Wl + Wi + Pt + Md & 78.44\% & 73.83\% & 76.07\% \\
+		
+		We + Ws + Wa + Wp + Wl + Wi + Pt + Md & 79.38\% & 76.28\% & 77.8\% \\
+		
+		We + Ws + Wa + Me + Wl + Wi + Pt + Md & 74.24\% & \textbf{78.23\%} & 76.19\% \\
+		
+		We + Ws + Wa + Me + Wp + Wi + Pt + Md & 75.36\% & 76.28\% & 75.82\% \\
+		
+		We + Ws + Wa + Me + Wp + Wl + Pt + Md & 83.69\% & 75.3\% & 79.27\% \\
+		
+		We + Ws + Wa + Me + Wp + Wl + Wi + Md & 79.68\% & 74.81\% & 77.17\% \\
+		
+		We + Ws + Wa + Me + Wp + Wl + Wi + Pt & 75.66\% & 76.03\% & 75.85\% \\
 		\bottomrule
 	\end{tabular}
 \end{table*}
@@ -118,344 +157,40 @@ The result of the scenario can be seen in Table \ref{tab:model_scenario}.
 		\toprule
 		Models&Precision&Recall&F-Measure\\
 		\midrule
-			RAKE & 43.24\% & 68.19\% & 52.90\% \\
-			
-			CRF & 63.44\% & 64.94\% & 62.52\% \\
-			
-			LSTM & 78.77\% & 79.71\% & 79.16\% \\
-			
-			B-LSTM & 81.88\% & 83.05\% & 82.37\% \\
-			
-			CNN-B-LSTM & 82.00\% & 82.99\% & 82.41\% \\
-	
+		RAKE & 43.24\% & 68.19\% & 52.90\% \\
+		
+		CRF & 63.44\% & 64.94\% & 62.52\% \\
+		
+		LSTM & 78.77\% & 79.71\% & 79.16\% \\
+		
+		B-LSTM & 81.88\% & \textbf{83.05\%} & 82.37\% \\
+		
+		CNN-B-LSTM & \textbf{82.00\%} & 82.99\% & \textbf{82.41\%} \\
+		
 		\bottomrule
 	\end{tabular}
 \end{table}
-\section{INI CONTOH}
-\subsection{Type Changes and {\itshape Special} Characters}
+Table \ref{tab:model_scenario} shows the performance of different methods that we proposed on dataset we have. To evaluate or model we use 10-cross fold validation. From the results, we observed that every supervised method using sequence labeling approach achieved a better performance than RAKE. The best result achieved by CNN with two stacked B-LSTM with 82.41\% F-Score. RAKE Perform the worst. The result shows that RAKE only achieved 52.9\% F-Score. This is because RAKE using statistical approach to weight candidate keyphrases which becoe a problem in short document like medical questions. Furthermore, RAKE using stopwords to split candidate keyphrases in document, but user-generated content tend to have a bad structural information. Thus there are some misplaced stopwords in the content. Among other methods, CRF performed the worst. Bidirectional approach shows effectiveness because B-LSTM has a better result than LSTM. Furthermore, using CNN to capture context between words also shows improvement and it become the best result in our experiment. However, when we use CRF on the top of our model the results dropped. The experiment results indicated our context aware CNN and B-LSTM worked well in keyphrase extraction in Indonesian user-generated medical domain. 
 
-We have already seen several typeface changes in this sample.  You can
-indicate italicized words or phrases in your text with the command
-\texttt{{\char'134}textit}; emboldening with the command
-\texttt{{\char'134}textbf} and typewriter-style (for instance, for
-computer code) with \texttt{{\char'134}texttt}.  But remember, you do
-not have to indicate typestyle changes when such changes are part of
-the \textit{structural} elements of your article; for instance, the
-heading of this subsection will be in a sans serif\footnote{Another
-  footnote here.  Let's make this a rather long one to see how it
-  looks.} typeface, but that is handled by the document class file.
-Take care with the use of\footnote{Another footnote.}  the
-curly braces in typeface changes; they mark the beginning and end of
-the text that is to be in the different typeface.
-
-You can use whatever symbols, accented characters, or non-English
-characters you need anywhere in your document; you can find a complete
-list of what is available in the \textit{\LaTeX\ User's Guide}
-\cite{Lamport:LaTeX}.
-
-\subsection{Math Equations}
-You may want to display math equations in three distinct styles:
-inline, numbered or non-numbered display.  Each of
-the three are discussed in the next sections.
-
-\subsubsection{Inline (In-text) Equations}
-A formula that appears in the running text is called an
-inline or in-text formula.  It is produced by the
-\textbf{math} environment, which can be
-invoked with the usual \texttt{{\char'134}begin\,\ldots{\char'134}end}
-construction or with the short form \texttt{\$\,\ldots\$}. You
-can use any of the symbols and structures,
-from $\alpha$ to $\omega$, available in
-\LaTeX~\cite{Lamport:LaTeX}; this section will simply show a
-few examples of in-text equations in context. Notice how
-this equation:
-\begin{math}
-  \lim_{n\rightarrow \infty}x=0
-\end{math},
-set here in in-line math style, looks slightly different when
-set in display style.  (See next section).
-
-\subsubsection{Display Equations}
-A numbered display equation---one set off by vertical space from the
-text and centered horizontally---is produced by the \textbf{equation}
-environment. An unnumbered display equation is produced by the
-\textbf{displaymath} environment.
-
-Again, in either environment, you can use any of the symbols
-and structures available in \LaTeX\@; this section will just
-give a couple of examples of display equations in context.
-First, consider the equation, shown as an inline equation above:
-\begin{equation}
-  \lim_{n\rightarrow \infty}x=0
-\end{equation}
-Notice how it is formatted somewhat differently in
-the \textbf{displaymath}
-environment.  Now, we'll enter an unnumbered equation:
-\begin{displaymath}
-  \sum_{i=0}^{\infty} x + 1
-\end{displaymath}
-and follow it with another numbered equation:
-\begin{equation}
-  \sum_{i=0}^{\infty}x_i=\int_{0}^{\pi+2} f
-\end{equation}
-just to demonstrate \LaTeX's able handling of numbering.
-
-\subsection{Citations}
-Citations to articles~\cite{bowman:reasoning,
-clark:pct, braams:babel, herlihy:methodology},
-conference proceedings~\cite{clark:pct} or maybe
-books \cite{Lamport:LaTeX, salas:calculus} listed
-in the Bibliography section of your
-article will occur throughout the text of your article.
-You should use BibTeX to automatically produce this bibliography;
-you simply need to insert one of several citation commands with
-a key of the item cited in the proper location in
-the \texttt{.tex} file~\cite{Lamport:LaTeX}.
-The key is a short reference you invent to uniquely
-identify each work; in this sample document, the key is
-the first author's surname and a
-word from the title.  This identifying key is included
-with each item in the \texttt{.bib} file for your article.
-
-The details of the construction of the \texttt{.bib} file
-are beyond the scope of this sample document, but more
-information can be found in the \textit{Author's Guide},
-and exhaustive details in the \textit{\LaTeX\ User's
-Guide} by Lamport~\shortcite{Lamport:LaTeX}.
-
-
-This article shows only the plainest form
-of the citation command, using \texttt{{\char'134}cite}.
-
-\subsection{Tables}
-Because tables cannot be split across pages, the best
-placement for them is typically the top of the page
-nearest their initial cite.  To
-ensure this proper ``floating'' placement of tables, use the
-environment \textbf{table} to enclose the table's contents and
-the table caption.  The contents of the table itself must go
-in the \textbf{tabular} environment, to
-be aligned properly in rows and columns, with the desired
-horizontal and vertical rules.  Again, detailed instructions
-on \textbf{tabular} material
-are found in the \textit{\LaTeX\ User's Guide}.
-
-Immediately following this sentence is the point at which
-Table~\ref{tab:freq} is included in the input file; compare the
-placement of the table here with the table in the printed
-output of this document.
-
+We also tried our feature weighting layer in our best model which is CNN with B-LSTM and fully-connected hidden layer on top. The result in Table \ref{tab:weighting_scenario} shows that our weighting layer not worked quite well. We suspect the gap of information between features are on of the reason which cause the result drop
 \begin{table}
-  \caption{Frequency of Special Characters}
-  \label{tab:freq}
-  \begin{tabular}{ccl}
-    \toprule
-    Non-English or Math&Frequency&Comments\\
-    \midrule
-    \O & 1 in 1,000& For Swedish names\\
-    $\pi$ & 1 in 5& Common in math\\
-    \$ & 4 in 5 & Used in business\\
-    $\Psi^2_1$ & 1 in 40,000& Unexplained usage\\
-  \bottomrule
-\end{tabular}
+	\caption{Weighting Layer Scenario Result}
+	\label{tab:weighting_scenario}
+	\begin{tabular}{lccc}
+		\toprule
+		Models&Precision&Recall&F-Measure\\
+		\midrule
+		CNN-B-LSTM & 82.00\% & 82.99\% & 82.41\% \\
+		
+		W-CNN-B-LSTM & 81.08\% & 81.18\% & 81.01\% \\
+		\bottomrule
+	\end{tabular}
 \end{table}
+\subsection{Error Analysis}
+We performed an error analysis to the aforementioned model, the result shown there are several errors. Some of the error are uncompleted keyphrases. For example "headache on (sakit kepala pada)", "medicine for (obat untuk)". Our model also failed to capture complex medicine name and disease. This is due to our small data set and not all medicine and disease are captured in our knowledge base. Moreover, there are also special case for keyphrases like "treatment for headache and sore throat (penyembuhan untuk sakit kepala dan tenggorokan)", that keyphrase need to be captured as whole because "sore throat" have a connection with the word "treatment". But our model, failed to capture that connection, it extracted "treatment for headache" and "sore throat" separately.
+\section{Conclusion}
+We investigate a keyphrase extraction problem especially in Indonesian medical questions domain with sequence labeling approach. We leverage a deep learning approach using CNN and B-LSTM. Moreover, we also extracted nine features that capture medical concepts from a knowledge base, and linguistic components as our features. With this model and features, we are able to overcome problems such as informal language, short document, and medical domain specific. Our model achieves F1 score of 82.41\% on manually annotated Indonesian medical questions.
 
-To set a wider table, which takes up the whole width of the page's
-live area, use the environment \textbf{table*} to enclose the table's
-contents and the table caption.  As with a single-column table, this
-wide table will ``float'' to a location deemed more desirable.
-Immediately following this sentence is the point at which
-Table~\ref{tab:commands} is included in the input file; again, it is
-instructive to compare the placement of the table here with the table
-in the printed output of this document.
+For handling several problems that occurred in this experiment, we suggest to create a language model for post-processing. The language model expected to handle cases like uncompleted keyphrase or connection between keyphrase.
 
-
-\begin{table*}
-  \caption{Some Typical Commands}
-  \label{tab:commands}
-  \begin{tabular}{ccl}
-    \toprule
-    Command &A Number & Comments\\
-    \midrule
-    \texttt{{\char'134}author} & 100& Author \\
-    \texttt{{\char'134}table}& 300 & For tables\\
-    \texttt{{\char'134}table*}& 400& For wider tables\\
-    \bottomrule
-  \end{tabular}
-\end{table*}
-% end the environment with {table*}, NOTE not {table}!
-
-It is strongly recommended to use the package booktabs~\cite{Fear05}
-and follow its main principles of typography with respect to tables:
-\begin{enumerate}
-\item Never, ever use vertical rules.
-\item Never use double rules.
-\end{enumerate}
-It is also a good idea not to overuse horizontal rules.
-
-
-\subsection{Figures}
-
-Like tables, figures cannot be split across pages; the best placement
-for them is typically the top or the bottom of the page nearest their
-initial cite.  To ensure this proper ``floating'' placement of
-figures, use the environment \textbf{figure} to enclose the figure and
-its caption.
-
-This sample document contains examples of \texttt{.eps} files to be
-displayable with \LaTeX.  If you work with pdf\LaTeX, use files in the
-\texttt{.pdf} format.  Note that most modern \TeX\ systems will convert
-\texttt{.eps} to \texttt{.pdf} for you on the fly.  More details on
-each of these are found in the \textit{Author's Guide}.
-
-\begin{figure}
-\includegraphics{fly}
-\caption{A sample black and white graphic.}
-\end{figure}
-
-\begin{figure}
-\includegraphics[height=1in, width=1in]{fly}
-\caption{A sample black and white graphic
-that has been resized with the \texttt{includegraphics} command.}
-\end{figure}
-
-
-As was the case with tables, you may want a figure that spans two
-columns.  To do this, and still to ensure proper ``floating''
-placement of tables, use the environment \textbf{figure*} to enclose
-the figure and its caption.  And don't forget to end the environment
-with \textbf{figure*}, not \textbf{figure}!
-
-\begin{figure*}
-\includegraphics{flies}
-\caption{A sample black and white graphic
-that needs to span two columns of text.}
-\end{figure*}
-
-
-\begin{figure}
-\includegraphics[height=1in, width=1in]{rosette}
-\caption{A sample black and white graphic that has
-been resized with the \texttt{includegraphics} command.}
-\end{figure}
-
-\subsection{Theorem-like Constructs}
-
-Other common constructs that may occur in your article are the forms
-for logical constructs like theorems, axioms, corollaries and proofs.
-ACM uses two types of these constructs:  theorem-like and
-definition-like.
-
-Here is a theorem:
-\begin{theorem}
-  Let $f$ be continuous on $[a,b]$.  If $G$ is
-  an antiderivative for $f$ on $[a,b]$, then
-  \begin{displaymath}
-    \int^b_af(t)\,dt = G(b) - G(a).
-  \end{displaymath}
-\end{theorem}
-
-Here is a definition:
-\begin{definition}
-  If $z$ is irrational, then by $e^z$ we mean the
-  unique number that has
-  logarithm $z$:
-  \begin{displaymath}
-    \log e^z = z.
-  \end{displaymath}
-\end{definition}
-
-The pre-defined theorem-like constructs are \textbf{theorem},
-\textbf{conjecture}, \textbf{proposition}, \textbf{lemma} and
-\textbf{corollary}.  The pre-defined de\-fi\-ni\-ti\-on-like constructs are
-\textbf{example} and \textbf{definition}.  You can add your own
-constructs using the \textsl{amsthm} interface~\cite{Amsthm15}.  The
-styles used in the \verb|\theoremstyle| command are \textbf{acmplain}
-and \textbf{acmdefinition}.
-
-Another construct is \textbf{proof}, for example,
-
-\begin{proof}
-  Suppose on the contrary there exists a real number $L$ such that
-  \begin{displaymath}
-    \lim_{x\rightarrow\infty} \frac{f(x)}{g(x)} = L.
-  \end{displaymath}
-  Then
-  \begin{displaymath}
-    l=\lim_{x\rightarrow c} f(x)
-    = \lim_{x\rightarrow c}
-    \left[ g{x} \cdot \frac{f(x)}{g(x)} \right ]
-    = \lim_{x\rightarrow c} g(x) \cdot \lim_{x\rightarrow c}
-    \frac{f(x)}{g(x)} = 0\cdot L = 0,
-  \end{displaymath}
-  which contradicts our assumption that $l\neq 0$.
-\end{proof}
-
-\section{Conclusions}
-This paragraph will end the body of this sample document.
-Remember that you might still have Acknowledgments or
-Appendices; brief samples of these
-follow.  There is still the Bibliography to deal with; and
-we will make a disclaimer about that here: with the exception
-of the reference to the \LaTeX\ book, the citations in
-this paper are to articles which have nothing to
-do with the present subject and are used as
-examples only.
-%\end{document}  % This is where a 'short' article might terminate
-
-
-
-\appendix
-%Appendix A
-\section{Headings in Appendices}
-The rules about hierarchical headings discussed above for
-the body of the article are different in the appendices.
-In the \textbf{appendix} environment, the command
-\textbf{section} is used to
-indicate the start of each Appendix, with alphabetic order
-designation (i.e., the first is A, the second B, etc.) and
-a title (if you include one).  So, if you need
-hierarchical structure
-\textit{within} an Appendix, start with \textbf{subsection} as the
-highest level. Here is an outline of the body of this
-document in Appendix-appropriate form:
-\subsection{Introduction}
-\subsection{The Body of the Paper}
-\subsubsection{Type Changes and  Special Characters}
-\subsubsection{Math Equations}
-\paragraph{Inline (In-text) Equations}
-\paragraph{Display Equations}
-\subsubsection{Citations}
-\subsubsection{Tables}
-\subsubsection{Figures}
-\subsubsection{Theorem-like Constructs}
-\subsubsection*{A Caveat for the \TeX\ Expert}
-\subsection{Conclusions}
-\subsection{References}
-Generated by bibtex from your \texttt{.bib} file.  Run latex,
-then bibtex, then latex twice (to resolve references)
-to create the \texttt{.bbl} file.  Insert that \texttt{.bbl}
-file into the \texttt{.tex} source file and comment out
-the command \texttt{{\char'134}thebibliography}.
-% This next section command marks the start of
-% Appendix B, and does not continue the present hierarchy
-\section{More Help for the Hardy}
-
-Of course, reading the source code is always useful.  The file
-\path{acmart.pdf} contains both the user guide and the commented
-code.
-
-\begin{acks}
-  The authors would like to thank Dr. Yuhua Li for providing the
-  matlab code of  the \textit{BEPS} method. 
-
-  The authors would also like to thank the anonymous referees for
-  their valuable comments and helpful suggestions. The work is
-  supported by the \grantsponsor{GS501100001809}{National Natural
-    Science Foundation of
-    China}{http://dx.doi.org/10.13039/501100001809} under Grant
-  No.:~\grantnum{GS501100001809}{61273304}
-  and~\grantnum[http://www.nnsf.cn/youngscientsts]{GS501100001809}{Young
-    Scientsts' Support Program}.
-
-\end{acks}
+Furthermore, we realized that there are no solid evaluation method for keyphrase extraction. Partial evaluation may handle how the model extract sequences in a document. However, weights for importance in sequences are different between words. For example "therapy for pregnancy", in that keyphrase we may realize that "pregnancy" is more important than other words. Thus partial evaluation failed to capture that problem.

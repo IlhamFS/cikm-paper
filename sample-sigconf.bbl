@@ -37,6 +37,18 @@
 \providecommand\natexlab[1]{#1}
 \providecommand\showeprint[2][]{arXiv:#2}
 
+\bibitem[\protect\citeauthoryear{Abacha and Zweigenbaum}{Abacha and
+  Zweigenbaum}{2011}]%
+        {abacha2011medical}
+\bibfield{author}{\bibinfo{person}{Asma~Ben Abacha} {and}
+  \bibinfo{person}{Pierre Zweigenbaum}.} \bibinfo{year}{2011}\natexlab{}.
+\newblock \showarticletitle{Medical entity recognition: A comparison of
+  semantic and statistical methods}. In \bibinfo{booktitle}{{\em Proceedings of
+  BioNLP 2011 Workshop}}. Association for Computational Linguistics,
+  \bibinfo{pages}{56--64}.
+\newblock
+
+
 \bibitem[\protect\citeauthoryear{Cao, Cimino, Ely, and Yu}{Cao
   et~al\mbox{.}}{2010}]%
         {cao2010automatically}
@@ -90,10 +102,20 @@
 \newblock
 
 
-\bibitem[\protect\citeauthoryear{Herwando}{Herwando}{2016}]%
+\bibitem[\protect\citeauthoryear{Herwando}{Herwando}{2016a}]%
+        {skripsiKakAbid}
+\bibfield{author}{\bibinfo{person}{Raditya Herwando}.}
+  \bibinfo{year}{2016}\natexlab{a}.
+\newblock \bibinfo{title}{Pemrosesan Pertanyaan Pada Sistem Tanya Jawab Bidang
+  Kesehatan Dengan Pendekatan Pembelajaran Mesin}.
+\newblock   (\bibinfo{date}{6} \bibinfo{year}{2016}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Herwando}{Herwando}{2016b}]%
         {skripsiKakRadit}
 \bibfield{author}{\bibinfo{person}{Raditya Herwando}.}
-  \bibinfo{year}{2016}\natexlab{}.
+  \bibinfo{year}{2016}\natexlab{b}.
 \newblock \bibinfo{title}{Pengenalan Entitas Kesehatan pada Forum Kesehatan
   Online Berbahasa Indonesia Menggunakan Algoritma Conditional Random Fields}.
 \newblock   (\bibinfo{date}{7} \bibinfo{year}{2016}).
@@ -158,6 +180,18 @@
 \newblock
 
 
+\bibitem[\protect\citeauthoryear{Mikolov, Sutskever, Chen, Corrado, and
+  Dean}{Mikolov et~al\mbox{.}}{2013}]%
+        {mikolov2013wordembed}
+\bibfield{author}{\bibinfo{person}{Tomas Mikolov}, \bibinfo{person}{Ilya
+  Sutskever}, \bibinfo{person}{Kai Chen}, \bibinfo{person}{Greg~S Corrado},
+  {and} \bibinfo{person}{Jeff Dean}.} \bibinfo{year}{2013}\natexlab{}.
+\newblock \showarticletitle{Distributed representations of words and phrases
+  and their compositionality}. In \bibinfo{booktitle}{{\em Advances in neural
+  information processing systems}}. \bibinfo{pages}{3111--3119}.
+\newblock
+
+
 \bibitem[\protect\citeauthoryear{Moldovan, Harabagiu, Pasca, Mihalcea, Girju,
   Goodrum, and Rus}{Moldovan et~al\mbox{.}}{2000}]%
         {qaEkp}
@@ -169,6 +203,19 @@
   question answering system}. In \bibinfo{booktitle}{{\em Proceedings of the
   38th Annual Meeting on Association for Computational Linguistics}}.
   Association for Computational Linguistics, \bibinfo{pages}{563--570}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Page, Brin, Motwani, and Winograd}{Page
+  et~al\mbox{.}}{1999}]%
+        {page1999pagerank}
+\bibfield{author}{\bibinfo{person}{Lawrence Page}, \bibinfo{person}{Sergey
+  Brin}, \bibinfo{person}{Rajeev Motwani}, {and} \bibinfo{person}{Terry
+  Winograd}.} \bibinfo{year}{1999}\natexlab{}.
+\newblock \bibinfo{booktitle}{{\em The PageRank citation ranking: Bringing
+  order to the web.}}
+\newblock \bibinfo{type}{{T}echnical {R}eport}. \bibinfo{institution}{Stanford
+  InfoLab}.
 \newblock
 
 
