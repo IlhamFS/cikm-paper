@@ -1,0 +1,215 @@
+\section{Introduction}
+There are a tremendous amount of user-generated contents about medical information through the internet. As a result, there is a growing need for enriching medical-related knowledge, for which it can be very valuable for several tasks, such as medical document retrieval, medical question answering, and health-related text mining applications \cite{cao2010automatically}. However, understanding those various health-related contents, especially from an online forum, is simply not a trivial task since they are written in free text format (i.e. unstructured format), and often prone to grammatical and typographical glitches. Therefore, reducing the complex characteristics of the textual contents, including but not limited to linguistic variations, into structured information could be very beneficial for the text interpretation process. 
+
+One possible solution is to extract medical terms that represent the document they belong to. The common approach is harnessing medical entity recognizer. However, we argue that there are many missing pieces of information when we merely rely on medical entities or terminologies as our main information for representing a particular document. Hence, we leverage keyphrase to cover more valuable information. Keyphrases are usually selected phrases or clauses that can capture the main topic of a given document \cite{turney2000learning}. They can provide readers with highly valuable and representative information, such that looking at keyphrases is sufficient to understand the whole body of a document.
+
+In this paper, we only focus the task of keyphrase extraction on Indonesian medical questions from online forums, such as alodokter\footnote{www.alodokter.com}, health detik \footnote{health.detik.com}, dokter.id \footnote{www.dokter.id}, klikdokter \footnote{www.klikdokter.com}. We present a new keyphrase extraction techniques to extract more important information about the patient intentions and needs, which expressed inside Indonesian medical questions. Furthermore, we also propose a new definition of keyphrases, which is based on our observation of health-related and user-generated questions. Actually, our final goal is to develop medical question answering systems to assist physicians or people obtaining health information. The work presented in this paper is absolutely in line with our goal since important keyphrases of a medical question can be used to formulate a query for the passage or question retrieval subsystem \cite{gong2009improving}. The following example shows the results of keyphrase extraction in a medical document:
+	\textit{\\Dok , saya sering sekali merasa \textbf{\emph{kram pada perut kanan bagian atas}} disertai \textbf{detak jantung yang cepat} serta \textbf{keringat dingin} dan \textbf{pusing}. Dan saat kambuh seperti itu, \textbf{nafas sangat sakit}. Seminggu yang lalu sampai terkapar karena tidak kuat menahan sakitnya saat bernafas. apakah ada hubungannya dengan \textbf{diet mayo}? terima kasih sblumnya dok.}
+	\texttt{(Doc, i frequently feel a \textbf{cramp on upper right stomach} with \textbf{fasten heart beat} also \textbf{cold sweat} and \textbf{headache}. And when the symptom occur it's \textbf{very hurt when breathing}. Last week i fainted because cannot hold the pain when i was breathing. is there any connection with \textbf{moyo diet}? thanks before)}
+It can be seen on the example that keyphrases can be a word, phrase, or even clause. Furthermore, there are many grammatical errors and abbreviation, such as \texttt{sy} for the replacement of the word \texttt{saya (I)}. It is also worth to note that keyphrase \texttt{diet mayo (mayo diet)} is not part of medical entity listed by Wahid \cite{skripsiWahid} and Abid \cite{skripsiKakAbid} research. Thus, extracting keyphrase for getting patient needs is not a trivial task. 
+
+In our work, we use similar approach as in Cao et al. \cite{cao2010automatically}, which treats keyphrase extraction as a sequence labeling task. The difference is that, in our experiment, we employed and combined various deep learning architectures, such as convolutional neural networks and bi-directional long short-term memory networks, to exploit high level features between neighboring word positions. To improve the quality of our model, we leverage several new hand-crafted features that can handle our keyphrase extraction problems in medical user-generated content, such as word importance and word stickiness features. The word importance feature is enable to rank words in a document by their importance value. The more important a word is to the content of document, the higher its "keywordness" value would seem to be. In addition, we also propose word stickiness feature to make our model constructs keyphrases
+%===========Unused Introduction========================
+
+\iffalse
+Keyphrases are usually selected phrases or clauses that can capture the main topic of a given document \cite{turney2000learning}. They can provide readers with highly valuable and representative information, such that looking at keyphrases is sufficient to understand the whole body of document. Moreover, keyphrases are important for text summarization, document clustering, and classification task (\cite{classDocumentEkp1}; \cite{qaEkp}; \cite{gong2009improving}). Previous works have shown that using keyphrases to generate queries can improve the quality of question retrieval in medical question answering forum \cite{cao2010automatically}.
+
+
+Keyphrase extraction methods have been mostly using statistical approach (\cite{sparck1972statistical} \cite{zhang2007comparative} \cite{rake} \cite{mihalcea2004textrank}) and supervised learning approach (\cite{witten1999kea} \cite{medelyan2009human} \cite{marujoMAUI}). The statistical approach often involves keyword candidate selection and candidate's property calculation. The "keywordness" value of a candidate phrase is usually scored based on its typical length as well as frequency in which document it appears \cite{rake}. While the statistical approach is very efficient to generate keyphrases, our experiments showed that it performs poorly on user generated contents and short documents. The other approach is based on supervised learning, there are two common approach in supervised learning: classification and sequence labeling. In classification approach, candidate keyphrases are extracted using statistical \cite{sparck1972statistical} or language model \cite{ekpNeuralNetworks}. Then, the candidate keyphrases are classified whether a candidate is a keyphrase or not by using a pre-trained model. However, classification approach cannot capture semantic relationship between words in a document \cite{surveyPopulerTerbaruEkp}.  In sequence labeling approach,  like the one proposed by \cite{cao2010automatically} and \cite{zhang2008automatic}. They define keyphrase extraction task as a sequence labeling task, in which each word in the document can have two possible labels: keyword or non-keyword. The method they proposed worked well by outperforming unsupervised approach. However, synonym and ambiguity words cannot be handled properly \cite{zhang2008automatic}. For example, we give a medical question asked by a patient in Indonesian language:
+	\textit{\\Dok , saya sering sekali merasa \textbf{\emph{kram pada perut kanan bagian atas}} disertai \textbf{detak jantung yang cepat} serta \textbf{keringat dingin} dan \textbf{pusing}. Dan saat kambuh seperti itu, \textbf{nafas sangat sakit}. Seminggu yang lalu sampai terkapar karena tidak kuat menahan sakitnya saat bernafas. apakah ada hubungannya dengan \textbf{diet mayo}? terima kasih sblumnya dok.}
+	\texttt{(Doc, i frequently feel a \textbf{cramp on upper right stomach} with \textbf{fasten heart beat} also \textbf{cold sweat} and \textbf{headache}. And when the symptom occur it's \textbf{very hurt when breathing}. Last week i fainted because cannot hold the pain when i was breathing. is there any connection with \textbf{moyo diet}? thanks before)}
+
+It can be seen on the example that keyphrases can be a word,
+phrase, or even clause. Furthermore, there are many grammatical
+errors and abbreviation, such as sy for the replacement of the word
+saya (I). It is also worth to note that keyphrase diet mayo (mayo
+diet) is not part of medical entity listed by Wahid [9] and Abid
+[4] research. Thus, extracting keyphrase for getting patient needs
+is not a trivial task.
+
+In our work, we use the same approach as Cao \cite{cao2010automatically} which treats keyphrase extraction as a sequence labeling task. In our experiment, we employed and combined various deep learning architectures, such as convolutional neural networks and bi-directional long short-term memory networks, to exploit high level features between neighboring word positions. To improve the quality of our model, we leverage several new hand-crafted features that can handle our keyphrase extraction problems in medical user-generated content, such as word importance and word stickiness features. The word importance feature is enable to rank words in a document by their importance value. The more important a word is to the content of document, the higher its "keywordness" value would seem to be. In addition, we also propose word stickiness feature to make our model constructs keyphrases better. 
+
+We also employed pre-trained word embedding to incorporate contextual, semantic, and syntactic information of a word. For example, we found that pre-trained word embedding can handle slang words and abbreviations by giving their word vectors closer to the vectors of their canonical forms. Finally, to evaluate the effectiveness of our model, we collected and manually annotated data from Indonesian medical forum questions, such as alodokter, health detik, doktergratis, dokter.id, doktersehat, klikdokter \footnote{www.alodokter.com, health.detik.com, www.dokter.id, www.doktersehat.com, www.klikdokter.com}. After that, the dataset was used for both training and testing our computational models. For our baseline, we use RAKE  \cite{rake}, which is the current state of the art model for extracting keyphrases.
+
+
+This paper is organized as follows.  In section 2 we discuss related works in keyphrase extraction. In section 3, the proposed keyphrase extraction method has been discussed. We present the evaluation and the experimental results in section 4. 
+\fi
+%====================================================
+\section{Related Works}
+In general, keyphrase extraction methods can be divided into two groups: unsupervised ranking (statistical) approach and supervised machine learning approach. For the unsupervised line of research, keyphrase extraction is formulated as a ranking problem, in which each candidate keyphrase is assigned a score that represents its keywordness value. The well-known research in unsupervised approach are RAKE \cite{rake} which use the ratio of word degree and frequency to rank terms. Mihalcea and Tarau \cite{mihalcea2004textrank} developed a graph-based approach which treats words as vertices and constructs edge between words using co-occurrence.
+
+Furthermore, this kind of approach does not require training data, which is often very difficult to obtain. On the other hand, supervised machine learning approach requires training data that contains a collection of documents with their labeled keywords. Using this approach, keyphrase extraction is usually treated as a classification or sequence labeling task in the level of words or phrases. The first step of this approach generates candidate keyphrases from a particular document. Finally, every candidate keyphrase in the document will be classified as either a keyphrase or non-keyphrase. The well-known method for this approach is KEA \cite{witten1999kea}, they use machine-learning (i.e., Naive Bayes) for classifying candidate keyphrases. The utilization of neural networks in classifying candidate keyphrases also conducted by \cite{ekpNeuralNetworks}. Recently, a well-known supervised approach for keyphrase extraction is based on sequence labeling problem (\cite{zhang2008automatic}, \cite{cao2010automatically}, \cite{zhang2016keyphrase}). The assumption behind this model is that the decision on whether a particular word serves as a keyword is affected by the information from its neighboring word positions.
+
+Unfortunately, there are limited works regarding the task of keyphrase extraction in medical domain, especially in Indonesian language. \cite{ekpMedicalDocumentHybrid} use a hybrid medical knowledge base and statistical approach to extract keyphrases from medical articles. They use stopwords to split candidate keyphrases, then candidates are ranked with two aspects: PF-IDF (Phrase Frequency * Inverse Document Frequency) and domain knowledge which is extracted from medical article. In terms of user-generated medical content, \cite{cao2010automatically} use Conditional Random Fields (CRFs) for extracting keywords from medical questions in online health forum. They use information, such as word location and length as features in their experiments.
+
+%=============================Unused Related Works=======
+\iffalse
+In general, keyphrase extraction methods can be divided into two groups: unsupervised ranking (statistical) approach and supervised machine learning approach. For the unsupervised line of research, keyphrase extraction is formulated as a ranking problem, in which each candidate keyphrase is assigned a score that represents its keywordness value. Furthermore, this kind of approach does not require training data, which is often very difficult to obtain. On the other hand, supervised machine learning approach requires training data that contains a collection of documents with their labeled keywords. Using this approach, keyphrase extraction is usually treated as a classification or sequence labeling task in the level of words or phrases. The first step of this approach generates candidate keyphrases from a particular document. Finally, every candidate keyphrase in the document will be classified as either a keyphrase or non-keyphrase. Recently, a well-known supervised approach for keyphrase extraction is based on sequence labeling problem (\cite{zhang2008automatic}\cite{cao2010automatically}\cite{zhang2016keyphrase}). The assumption behind this model is that the decision on whether a particular word serves as a keyword is affected by the information from its neighboring word positions.
+
+In the work of \cite{sparck1972statistical}, they leverage TF-IDF to get the most significant words. Specifically, they utilize term frequency and the inverse of document frequency to rank terms in the document. First, this Rapid Automatic Keywords Extraction \cite{rake} uses stopwords to split a document into several candidate keyphrases. All candidates will be ranked by the degrees and frequencies of all words inside them. Finally, the rank points of each candidate is obtained by summing over all degrees and frequencies of all words contained in each keyphrase. RAKE is proven to be successful for extracting keyphrases in special documents such as paper and article \cite{rake}.
+
+There is also a popular graph-based approach, namely TextRank \cite{mihalcea2004textrank}, i.e., a modified PageRank algorithm to extract keyphrases from a document. They exploit word co-occurrence information to build a document graph, in which a word serves as a node and co-occurence information determines an edge between two nodes (words). After they build the graph, they actually run PageRank algorithm to determine the keywordness score for each node in the graph. A word with high PageRank value denotes that its related concept can be found in many location inside the document, which means that it is a good candidate for keyword. After that, keyphrases can be obtained using post-processing step that may combine contiguous candidates into one keyphrase.
+
+One of the earlier supervised approaches in the problem of keyphrase extraction is KEA \cite{witten1999kea}. KEA uses tf-idf and first occurrence of the term to identify candidate keyphrases. They use a machine-learning algorithm (i.e., Naive Bayes) to predict whether or not a candidate is a good keyphrase. \cite{medelyan2009human} developed a system called MAUI that can extract keyphrases using trained corpus and controlled vocabulary. MAUI itself is an improvement to the aforementioned supervised model, KEA. Furthermore, Marujo et al., \cite{marujoMAUI} use word embedding and brown clustering as features. Their experiment result had shown that the proposed features and MAUI performs better than statistical methods, such as simple tf-idf approach.
+
+The utilization of neural networks is also quite popular in the recent years. Sarkar and Kamal \cite{ekpNeuralNetworks} use Feed Forward Neural Networks to classify candidate keyphrases. To extract candidate keyphrases, they use POS tag information for classifying all words in the document. Then, Deterministic Finite Automation (DFA) is used to extract noun phrases as candidate keyphrases. Furthermore, deep neural networks is also employed for extracting keyphrase, like the one proposed by Zhang et al., \cite{zhang2016keyphrase}, that uses joint Recurrent Neural Networks (RNNs) layer to capture keyphrase sequences in microblogs. The research had shown that RNN is very effective to extract keyword.
+
+Unfortunately, there are limited works regarding the task of keyphrase extraction in medical domain. \cite{ekpMedicalDocumentHybrid} use a hybrid medical knowledge base and statistical approach to extract keyphrases from medical articles. They use stopwords to split candidate keyphrases, then candidates are ranked with two aspects: PF-IDF (Phrase Frequency * Inverse Document Frequency) and domain knowledge which is extracted from medical article. In terms of medical social media content, \cite{cao2010automatically} use Conditional Random Fields (CRFs) for extracting keywords from medical questions in online health-forum. They use information, such as word location and length as features in their experiments.
+\fi
+%===============================================
+\section{METHODOLOGY}
+
+\iffalse
+\subsection{DATA AND ANNOTATION}
+To analyze the effectiveness of our model for keyphrase extraction in user-generated medical domain, we constructed an evaluation dataset. A number of questions was gathered from Indonesian medical question answering forum. The data was crawled by \cite{skripsiKakRadit} and \cite{skripsiWahid} in their experiment. Generally, we gathered 416 question-answer pairs from \cite{skripsiKakRadit} and \cite{skripsiWahid}. We decided to use the same question-answers pairs to observe our keyphrases and medical entities that has been annotated by them. In addition, system for recognizing medical entities is not fully build, by using the same document we can use the annotated medical entities as our feature.
+
+From analyzing these question-answer pairs, we found some noise and unnecessary information. Question and answer have different main topic and focus. Moreover, we are focusing our task for getting user intentions and needs in our experiment. Based on that problem, we only use questions by users and remove answers by the doctors because it would be a better representation of user intentions and needs. There is also unnecessary information such as URL and email. We replace URL with "URL"  and email with "email" since we were focusing on textual content. Moreover, we also removed ads and spam in the data we gathered.
+
+Because we want to process all the questions by users, we tokenize every question in our data. The tokenization process included separating alphanumeric with non-alphanumeric. Then separating alphanumeric with numeric. 
+
+To evaluate the quality of our model. We manually annotated or data to label keyphrases in 416 questions. In this work, we use "IOB" tagging scheme to label every word \cite{collobert2011natural}. In Table X, we give an example sequence with labels for each word. The statistical information of the dataset can be seen in Table 
+\fi
+
+In this work, we view keyphrase extraction problem as a sequence labeling task. That is, given a medical question containing $N$ words $w = (w_1, w_2,...,w_N)$, we want to find the best sequence pf labels $y = (y_1, y_2,..., y_N)$, in which each label is determined using probabilities $P(y_i|w_{i-l},...,w_{i+l},y_{i-l},...,y_{i+l})$ where $l$ is a small number.
+
+Because we have a small dataset, our model would have a small learning material and an end-to-end learning approach will not work well. As a result, we leveraged nine handcrafted features that can help our model to characterize the sequence of keyphrases. Formally, our feature functions are, $f_1, f_2, ..., f_9$, which map a word to a particular feature value.
+
+\textbf{Word Embedding.} In the experiments, we use word embedding as input to the neural network. A skip-gram model \cite{mikolov2013wordembed} was used to generate these 128-dimensional vectors for documents in evaluation data. The dimension of the vector was chosen based on \cite{skripsiWahid} experiment. The word embeddings we used in this work were trained using a document that we gathered from Indonesia online forum, medical article, and medical question answering forum. Thus, the feature value for the word \texttt{headache} is $f_1(headache) = [v_1, v_2, ..., v_n]$ where $v_i$ is a real value and $n$ is 128.
+
+\textbf{Medical Dictionary.} In our experiment, we leveraged a medical knowledge base feature using a medical dictionary. Our medical dictionary contains a list of symptom, disease, treatment, and drug in the Indonesian language. The rationale behind this feature is intentions and needs of patients is more focused on their disease, symptom, treatment, and drug. Based on this feature, we classified words by their appearance in the medical dictionary. The dictionary was built by combining three dictionaries from \cite{skripsiKakAbid} research. The original dictionaries contained disease, symptom, treatment, and drug separately in each dictionary. For example, $f_2(headache) = [0, 1]$ because \texttt{headache} is disease and inside the dictionary.
+
+\textbf{Word Length.} This feature represents the length of each word (i.e., the number of characters in every word). This feature is based on \cite{cao2010automatically} research on keyphrase extraction in medical question who added word length as a feature because domain-specific words (e.g. "tuberculosis") tend to be lengthy when compared to common English words, and there is a correlation between the length of a word and its IDF value \citep{cao2010automatically}. Thus we use the same feature for Indonesian language. For example, $f_3(headache) = [8]$
+
+\textbf{Word Position.} We also adapted word position as feature based on \cite{cao2010automatically}research. Based on their observation, an important term sometimes appears toward the end of a clinical question. For example, "medicine for bell's palsy" appear towards the end of a question "what is the best medicine for bell's palsy?". Thus, the value of the word \texttt{palsy} is $f_4(palsy) = [8]$ because it is on the first position of the sentence.
+
+\textbf{POS-tag.} POS-tag of words was also added as our feature. POS-tag may give model grammatical information and a better understanding of ambiguous words. By our observation, many keyphrases have a common POS pattern. We use Stanford Part-Of-Speech Tagger which pre-trained by Dinakaramani \cite{dinakaramani2014designing}. We represent our POS tag feature as one-hot-vector. For example, the word \texttt{cancer} has noun tag, $f_5(cancer) = [0, ..,1, ...0]$.
+
+\textbf{Medical Entity.} We use medical entity which annotated by \cite{skripsiWahid} using four categories: drug, treatment, symptom, disease. By our observation, medical entities are sometimes part of keyphrases. Furthermore, medical entities can provide more information about drug or disease which not available in training data or a medical dictionary. We also use one-hot-vector to represent this feature. For example, $f_6(cancer) = [0, 0, 0 ,1]$
+
+\textbf{Abbreviation and Acronym.} We also identified words by their appearance in abbreviation or acronym dictionary gathered by \cite{skripsiKakAbid}. We observed that important word may not be shortened by the users, such as "cancer", "flu", "bell’s palsy". One-hot-vector is used to classify whether a word is an abbreviation/acronym or not. For example, the word \texttt{mengapa (why)} sometimes is abbreviated into \texttt{mngp} by some patients. Thus, $f_7(mngp) = [0, 1]$ 
+
+\textbf{Word Importance.} The purpose of this feature is to rank words in a document by their importance. To extract this feature, we adapted a method from TextRank \cite{mihalcea2004textrank} algorithm for ranking words in a document. They represent words as vertices in the graph and the distance between words as edges. However, in building an undirected graph, we use a word similarity by using our pre-trained word embedding model as a weight for edges. Two words have a connected edge if their similarity is not negative. Moreover, we use a modified PageRank \cite{page1999pagerank} algorithm that consider edges weight in the calculation. Formally, let $G = (V, E)$ be an undirected graph with the set of vertices V and set of edges E, where E is a subset of $VxV$. For a given vertex $V_i$ let $In(V_i)$ be the set of vertices that point to it (predecessors) and let $Out(V_i)$ be the set of vertices that vertex $V_i$ points to (successors). The modified PageRank formula that proposed by \cite{mihalcea2004textrank} can be seen in Formula \ref{eq:pagerank}.
+\begin{equation}\label{eq:pagerank}
+WS(V_{i})=(1-d) + d * \sum_{V_{i} \in In(V_{i})} \frac{w_{ji}}{\sum_{V_{i} \in Out(V_{j})}}w_{jk}
+\end{equation}
+For example, $f_6(cancer) = [0.56]$.
+\textbf{Word Stickiness.} As a keyphrase, a sequence must be in a valid order. There is some noise such as misuse punctuation by users. For example, "Saya mengalami pusing pada jidat sakit perut dan pandangan kabur (I am having a headache on forehead stomachache and blurred vision)", there is no comma between "jidat (forehead)", "sakit perut (stomachache)" and "dan (and)". Our model may mistake the sequence "(jidat sakit perut)forehead stomachache" as a keyphrase. Based on that problem, we propose a feature that may capture how likely of a given word is occurred together with the word before and after. We use Pointwise Mutual Information (PMI) of a bigram probability to capture the likeness. This feature represented as two-dimensional vector $v = [x1, x2]$, with $x_1$ is the PMI with the word before and $x_2$ is the PMI with the word after. Formula \ref{eq:pmi} is the formula for calculating the PMI value. In that formula, $p(x)$ is the occurrence probability of word $x$, $p(y)$ is the occurrence probability of word $y$, and $p(x, y)$ is the probability of word $x$ and $y$ co-occur together.
+\begin{equation}\label{eq:pmi}
+PMI(x,y)=log(\frac{p(x, y)}{p(x)*p(y)})
+\end{equation}
+For example, the word \texttt{cancer} in sentence "How to prevent cancer doc ?", the feature value is $f_6(cancer) = [0.56, 0.1]$. It is worth ti note that the word \texttt{cancer} is rarely co-occur with the word \texttt{doc}.
+
+
+We process the sequences word by word. All Features are extracted and concatenated into one vector from every word as the input representation of the model. The output of our model are labels which describe whether a word is either part of keyphrase or not. 
+
+We introduce Convolutional Neural Networks (CNNs) to exploit high-level features between neighboring word positions. Based on our observation, a keyphrase is. For example, "Doc, I have a frequent back pain. What happen?". The keyphrase for the previous example is "frequent back pain". In order to know that "back" is part of keyphrase, we need information from the word "frequent" which give an intensity of a symptom and "pain" which refer to "back pain" as the main term. With CNNs, we argue that our model can capture the surrounding information of a word. The output of the CNNs layer will be fed into our next layer which is B-LSTM.
+
+To get a better inference, information from the past and future of sequences can be integrated. This approach is proven effective in sequence labeling task such as semantic role labeling \cite{SMRzhou2015end} and named entity recognition \cite{ma2016end}. Therefore, we utilized bi-directional LSTM (B-LSTM) for extracting structural knowledge by processing sequences both forward and backward. We build up to two layers of B-LSTM.
+
+In order to perform the sequence tagging task, we build a fully connected layer in the top of our model. This layer will classify the output of our model with softmax activation function.
+
+We also experimented on customizing the way we input the features underneath our aforementioned networks. Instead of concatenating all features into one vector, we tried to give weight for every feature we have. We argue that each feature has different contribution to the model. In order to do so, we create a new layer underneath our model to do the weighting scenario. The following equation to weight all features can be seen in below:
+\begin{equation}
+Z =  tanh(W _{1}*F_{1} + W_{2}*F_{2} + .. + W_{n}*F_{n})
+\end{equation}
+Where $W_{i}$ are the weight for each feature and $F_{i}$ are the extracted feature in vector form.
+
+\section{Evaluations and Results}
+\subsection{Data Collection}
+To develop training data, we collected question-answer pairs which previously crawled by Abid \cite{skripsiKakAbid} and Wahid \cite{skripsiWahid} from Indonesian question-answering medical forum. Then, we selected 416 distinct question-answer pairs and removed the answer section for every pair because it's not relevant for obtaining patient intentions and needs. Finally, we manually annotated those questions. The statistical information of our data can be seen in Table \ref{tab:descriptive_stats}.
+
+\begin{table}
+	\caption{Statistical information of dataset. W, K, $\bar{N}_{w}$, $\bar{N}_{k}$ are the total of words, number of keyphrases, average number of words, and average number of keyphrases in each question, respectively.}
+	\label{tab:descriptive_stats}
+	\begin{tabular}{lcccc}
+		\toprule
+		\#questions&W&K&$\bar{N}_{w}$&$\bar{N}_{k}$\\
+		\midrule
+		416 & 26747  & 64.76 & 1861 & 4.49 \\
+		
+		\bottomrule
+	\end{tabular}
+\end{table}
+\subsection{Evaluation}
+One of the evaluation that we use in our work is using partial evaluation. This evaluation is used because we treat keyphrases as sequences of words. Thus we can use partial evaluation which is used to evaluate Named Entity Recognition system \cite{seki2003probabilistic}.  
+
+We use Recall, Precision, and F1 score as our evaluation parameters. Recall shows the number of correctly predicted keyphrases divided by the the total number of assigned keyphrases and Precision is the number of correctly predicted keyphrase divided by the total number of predicted keyphrases. To calculate F1 score we use Recall and Precision as parameters which is 2  Recall  Precision/ (Recall + Precision).
+%===========Commented Feature Ablation Study
+\iffalse
+\subsection{Feature Ablation Study}
+In this part, perform a feature ablation study. By considering all the features, and then removing one of these features, we want to estimate the importance of the features. To the experiment. We use 80\% as training set, and 20\% as a testing set. We used precision (P), recall (R), and F1-score (F1) as evaluation metrics. Table \ref{tab:ablation} show the experimental result. Then, we use LSTM as evaluation model because it is the most simple architecture. These are the following features we proposed: word stickiness (Ws), word abbreviation and acronym (Wa), Medical Entities (Me), Word Location (Wp), Word Length (Wl), Word Importance (Wi), POS tag (Pt), Medical Dictionary (Md).
+
+\begin{table*}
+	\caption{Feature Ablation Study Result}
+	\label{tab:ablation}
+	\begin{tabular}{lccc}
+		\toprule
+		Features&Precision&Recall&F-Measure\\
+		\midrule
+		We + Ws + Wa + Me + Wp + Wl + Wi + Pt + Md & \textbf{84.01\%} & 75.79\% & \textbf{79.69\%} \\
+		
+		Ws + Wa + Me + Wp + Wl + Wi + Pt + Md & 79.93\% & 57.45\% & 66.85\% \\
+		
+		We + Wa + Me + Wp + Wl + Wi + Pt + Md & 76.39\% & 73.59\% & 74.96\% \\
+		
+		We + Ws + Me + Wp + Wl + Wi + Pt + Md & 78.44\% & 73.83\% & 76.07\% \\
+		
+		We + Ws + Wa + Wp + Wl + Wi + Pt + Md & 79.38\% & 76.28\% & 77.8\% \\
+		
+		We + Ws + Wa + Me + Wl + Wi + Pt + Md & 74.24\% & \textbf{78.23\%} & 76.19\% \\
+		
+		We + Ws + Wa + Me + Wp + Wi + Pt + Md & 75.36\% & 76.28\% & 75.82\% \\
+		
+		We + Ws + Wa + Me + Wp + Wl + Pt + Md & 83.69\% & 75.3\% & 79.27\% \\
+		
+		We + Ws + Wa + Me + Wp + Wl + Wi + Md & 79.68\% & 74.81\% & 77.17\% \\
+		
+		We + Ws + Wa + Me + Wp + Wl + Wi + Pt & 75.66\% & 76.03\% & 75.85\% \\
+		\bottomrule
+	\end{tabular}
+\end{table*}
+
+
+The experimental results in Table \ref{tab:ablation} shows that every feature has a positive contribution to the model. It is shown by iteratively remove each feature one by one and every time we remove a feature, F-1 score always dropped. Hence, we use every feature to train our model in the next experiments.
+\fi
+%================================================================
+\subsection{Results}
+\begin{table}
+	\caption{Model Scenario Result}
+	\label{tab:model_scenario}
+	\begin{tabular}{lccc}
+		\toprule
+		Models&Precision&Recall&F-Measure\\
+		\midrule
+		RAKE & 43.24\% & 68.19\% & 52.90\% \\
+		
+		CRF & 63.44\% & 64.94\% & 62.52\% \\
+		
+		B-LSTM & 81.88\% & \textbf{83.05\%} & 82.37\% \\
+		
+		CNN-B-LSTM & \textbf{82.00\%} & 82.99\% & \textbf{82.41\%} \\
+		
+		W-CNN-B-LSTM & 81.08\% & 81.18\% & 81.01\% \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+We created a scenario to evaluate the performance of our model. In this scenario, we also compared our model to an unsupervised learning algorithm using RAKE \cite{rake} and a supervised learning algorithm CRF task. We also conducted an experiment to proof the effectiveness of our CNN layer by comparing standard B-LSTM and B-LSTM with CNNs layer(CNN-B-LSTM). Furthermore, we also compared our model with or without weighting layer (W-CNN-B-LSTM). 
+
+For comparison, we implemented RAKE \cite{rake} and CRF \cite{zhang2008automatic}, which use unsupervised and supervised approach. For CRF, we use the same features proposed above.
+
+As we can see in Table \ref{tab:model_scenario}, RAKE and CRF underperformed on Indonesian user-generated medical question since RAKE were specially devised for formal text. By our observation of the result provided by CRF, the method failed to predict long sequences as a keyphrase.
+
+Our CNNs layer also shows improvement in precision and F1 score. From the result above, we suggest that CNNs layer can extract more features implicitly from neighboring words. However, our weighting layer failed to provide some improvement. We argue that weighting layer has a significant information loss when converting features vector.
+
+\subsection{Other Analysis}
+We performed an analysis to the aforementioned model, the result shown there are several errors. Some of the error are uncompleted keyphrases. For example "headache on (sakit kepala pada)", "medicine for (obat untuk)". Our model also failed to capture complex medicine name and disease. This is due to our small data set and not all medicine and disease are captured in our knowledge base. Moreover, there are also special case for keyphrases like "treatment for headache and sore throat (penyembuhan untuk sakit kepala dan tenggorokan)", that keyphrase need to be captured as whole because "sore throat" have a connection with the word "treatment". But our model failed to capture that connection, it extracted "treatment for headache" and "sore throat" separately.
+
+\section{Conclusion}
+We have proposed a model to address the task of keyphrase extraction on Indonesian user-generated medical domain. Extracting information patient intentions and needs on user-generated medical content is not a trivial task due to the fact that the content is usually short, contain many medical terms, and written in an unstructured format, as opposed to formal text. Our model is based on sequence labeling task that employs deep learning approach using convolutional neural networks and bi-directional lstm. Several handcrafted features were proposed, including word importance to detect important word in a document and word stickiness for handling unstructured writing. Although our model outperforms state of the art methods for keyphrase extraction, further improvements are needed especially in evaluation method which cannot cover the whole problem.
+\iffalse
+We investigate a keyphrase extraction problem especially in Indonesian medical questions domain with sequence labeling approach. We leverage a deep learning approach using CNNsand B-LSTM. Moreover, we also extracted nine features that capture medical concepts from a knowledge base, and linguistic components as our features. With this model and features, we are able to overcome problems such as informal language, short document, and medical domain specific. Our model achieves F1 score of 82.41\% on manually annotated Indonesian medical questions.
+
+For handling several problems that occurred in this experiment, we suggest to create a language model for post-processing. The language model expected to handle cases like uncompleted keyphrase or connection between keyphrase.
+
+Furthermore, we realized that there are no solid evaluation method for keyphrase extraction. Partial evaluation may handle how the model extract sequences in a document. However, weights for importance in sequences are different between words. For example "therapy for pregnancy", in that keyphrase we may realize that "pregnancy" is more important than other words. Thus partial evaluation failed to capture that problem.
+\fi
