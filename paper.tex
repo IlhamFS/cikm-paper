@@ -70,7 +70,7 @@ In this paper, we only focus the task of keyphrase extraction on Indonesian medi
 	\textit{\\Dok , saya sering sekali merasa \textbf{\emph{kram pada perut kanan bagian atas}} disertai \textbf{detak jantung yang cepat} serta \textbf{keringat dingin} dan \textbf{pusing}. Dan saat kambuh seperti itu, \textbf{nafas sangat sakit}. apakah ada hubungannya dengan \textbf{diet mayo}? terima kasih sblumnya dok.}
 	\texttt{(Doc, i frequently feel a \textbf{cramp on upper right stomach} with \textbf{fasten heart beat} also \textbf{cold sweat} and \textbf{headache}. And when the symptom occur it's \textbf{very hurt when breathing}. is there any connection with \textbf{moyo diet}? thanks before)}
 	
-It can be seen on the example that keyphrases can be a word, phrase, or even clause. Furthermore, there are many grammatical errors and abbreviation, such as \texttt{"sy"} for the replacement of the word \texttt{"saya (I)"}. It is also worth to note that keyphrase \texttt{"diet mayo (mayo diet)"} is not part of medical entity categories. Thus, extracting keyphrase for getting patient needs is not a trivial task. 
+It can be seen on the example that keyphrases can be a word, phrase, or even clause. Furthermore, there are many grammatical errors and abbreviation, such as \texttt{"sy"} for the replacement of the word \texttt{"saya (I)"}. It is also worth to note that keyphrase \texttt{"diet mayo (mayo diet)"} is not part of any medical entity categories. Thus, we argue that extracting keyphrase from user-generated content especially on medical domain is not a trivial task. 
 
 In our work, we use similar approach as in Cao et al. \cite{cao2010automatically}, which treats keyphrase extraction as a sequence labeling task. The difference is that, in our experiment, we employed and combined various deep learning architectures, such as convolutional neural networks and bi-directional long short-term memory networks, to exploit high level features between neighboring word positions. To improve the quality of our model, we leverage several new hand-crafted features that can handle our keyphrase extraction problems in medical user-generated content, such as word importance and word stickiness features. The word importance feature is enable to rank words in a document by their importance value. The more important a word is to the content of document, the higher its "keywordness" value would seem to be. In addition, we also propose word stickiness feature to make our model constructs keyphrases
 
@@ -152,7 +152,7 @@ To develop training data, we collected question-answer pairs which previously cr
 For our experiments, we employed 10-cross-validation on our dataset. We use partial evaluation by Seki et al. \cite{seki2003probabilistic} to get precision, recall, F1-measure for evaluation metrics. This evaluation is used because we treat keyphrases as sequences of words.  
 
 
-\subsection{Results}
+\subsection{Results and Analyisis}
 \begin{table}
 	\caption{Model Scenario Results}
 	\label{tab:model_scenario}
@@ -178,7 +178,6 @@ For comparison, we implemented RAKE \cite{rake} and CRF \cite{cao2010automatical
 
 As we can see in Table \ref{tab:model_scenario}, RAKE and CRF underperformed on Indonesian user-generated medical question since RAKE were specially devised for formal text. For CRF, based on our observation from the result provided by CRF, the method failed to predict long sequences as a keyphrase. Our CNNs layer also shows improvement in precision and F1 score when compared to standard B-LSTM. We suggest that CNNs layer can extract more features implicitly from neighboring words. Moreover, our weighting layer shows improvement compared to CNN-B-LSTM. Hence, the best result is obtained by W-CNN-LSTM.
 
-\subsection{Analysis}
 We performed an analysis to the aforementioned model, the result shown there are several errors. Some of the error are uncompleted keyphrases. For example, "pusing pada (headache on)", "obat untuk (medicine for)". Our model also failed to capture complex medicine name and disease. This is due to our small data set and not all medicine and disease are captured in our medical knowledge base or medical entities. Moreover, there are also special case that our model failed to handle. For example, "penyembuhan untuk sakit kepala dan tenggorokan (treatment for headache and sore throat)", the keyphrase need to be captured as a whole because "sore throat" have a connection with the word "treatment". But our model failed to capture that connection and extracted "treatment for headache" and "sore throat" separately instead.
 \iffalse
 We also ablate our model by removing our features one by one. As we can see in Table \ref{tab:ablation}, F1 score always dropped when we removed one feature. Hence, we can say that all of our features are effective for this task.
