@@ -90,9 +90,9 @@
 \bibfield{author}{\bibinfo{person}{Xuezhe Ma} {and} \bibinfo{person}{Eduard
   Hovy}.} \bibinfo{year}{2016}\natexlab{}.
 \newblock \showarticletitle{End-to-end sequence labeling via bi-directional
-  lstm-cnns-crf}.
-\newblock \bibinfo{journal}{{\em arXiv preprint arXiv:1603.01354\/}}
-  (\bibinfo{year}{2016}).
+  lstm-cnns-crf}. In \bibinfo{booktitle}{{\em Proceedings of the 54th Annual
+  Meeting of the Association for Computational Linguistics}}. ACM,
+  \bibinfo{pages}{1064--1074}.
 \newblock
 
 
@@ -131,16 +131,6 @@
 \newblock
 
 
-\bibitem[\protect\citeauthoryear{Rohman}{Rohman}{2017}]%
-        {skripsiWahid}
-\bibfield{author}{\bibinfo{person}{Wahid~Nur Rohman}.}
-  \bibinfo{year}{2017}\natexlab{}.
-\newblock \bibinfo{title}{Pengenalan Entitas Kesehatan pada Forum Kesehatan
-  Online dengan Menggunakan Recurrent Neural Networks}.
-\newblock   (\bibinfo{date}{1} \bibinfo{year}{2017}).
-\newblock
-
-
 \bibitem[\protect\citeauthoryear{Rose, Engel, Cramer, and Cowley}{Rose
   et~al\mbox{.}}{2010}]%
         {rake}
@@ -154,14 +144,14 @@
 \newblock
 
 
-\bibitem[\protect\citeauthoryear{Sarkar}{Sarkar}{2013}]%
+\bibitem[\protect\citeauthoryear{Sarkar}{Sarkar}{}]%
         {ekpMedicalDocumentHybrid}
 \bibfield{author}{\bibinfo{person}{Kamal Sarkar}.}
-  \bibinfo{year}{2013}\natexlab{}.
 \newblock \showarticletitle{A hybrid approach to extract keyphrases from
   medical documents}.
-\newblock \bibinfo{journal}{{\em arXiv preprint arXiv:1303.1441\/}}
-  (\bibinfo{year}{2013}).
+\newblock \bibinfo{journal}{{\em International Journal of Computer
+  Applications\/}}  \bibinfo{volume}{63} (\bibinfo{year}{????}),
+  \bibinfo{pages}{14--19}.
 \newblock
 
 

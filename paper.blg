@@ -7,13 +7,16 @@ Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
 Database file #1: reference.bib
 Warning--entry type for "skripsiKakAbid" isn't style-file defined
 --line 184 of file reference.bib
-Warning--entry type for "skripsiWahid" isn't style-file defined
---line 194 of file reference.bib
+I was expecting a `,' or a `}'---line 371 of file reference.bib
+ :  
+ :  year={2013}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Warning--empty publisher in dinakaramani2014designing
 Warning--empty address in dinakaramani2014designing
-Warning--no number and no volume in ma2016end
-Warning--page numbers missing in both pages and numpages fields in ma2016end
+Warning--empty publisher in ma2016end
+Warning--empty address in ma2016end
 Warning--empty booktitle in mihalcea2004textrank
 Warning--empty publisher in mihalcea2004textrank
 Warning--empty address in mihalcea2004textrank
@@ -21,8 +24,7 @@ Warning--page numbers missing in both pages and numpages fields in mihalcea2004t
 Warning--empty publisher in mikolov2013wordembed
 Warning--empty address in mikolov2013wordembed
 Warning--no number and no volume in rake
-Warning--no number and no volume in ekpMedicalDocumentHybrid
-Warning--page numbers missing in both pages and numpages fields in ekpMedicalDocumentHybrid
+Warning--empty year in ekpMedicalDocumentHybrid
 Warning--no number and no volume in ekpNeuralNetworks
 Warning--page numbers missing in both pages and numpages fields in ekpNeuralNetworks
 Warning--empty publisher in seki2003probabilistic
@@ -33,45 +35,45 @@ Warning--empty publisher in zhang2016keyphrase
 Warning--empty address in zhang2016keyphrase
 Warning--empty publisher in SMRzhou2015end
 Warning--empty address in SMRzhou2015end
-You've used 18 entries,
+You've used 17 entries,
             5706 wiz_defined-function locations,
-            1410 strings with 18376 characters,
-and the built_in function-call counts, 19414 in all, are:
-= -- 2527
-> -- 717
+            1408 strings with 18321 characters,
+and the built_in function-call counts, 19157 in all, are:
+= -- 2455
+> -- 697
 < -- 0
-+ -- 220
-- -- 252
-* -- 1289
-:= -- 2015
-add.period$ -- 91
-call.type$ -- 18
-change.case$ -- 121
-chr.to.int$ -- 18
-cite$ -- 41
-duplicate$ -- 1561
-empty$ -- 1147
-format.name$ -- 304
-if$ -- 4796
++ -- 216
+- -- 244
+* -- 1268
+:= -- 1968
+add.period$ -- 86
+call.type$ -- 17
+change.case$ -- 116
+chr.to.int$ -- 17
+cite$ -- 39
+duplicate$ -- 1569
+empty$ -- 1142
+format.name$ -- 296
+if$ -- 4729
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 67
-newline$ -- 177
-num.names$ -- 144
-pop$ -- 733
+missing$ -- 68
+newline$ -- 168
+num.names$ -- 136
+pop$ -- 736
 preamble$ -- 1
-purify$ -- 210
+purify$ -- 200
 quote$ -- 0
-skip$ -- 587
+skip$ -- 590
 stack$ -- 0
-substring$ -- 1303
-swap$ -- 142
+substring$ -- 1346
+swap$ -- 155
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 428
-warning$ -- 23
-while$ -- 145
+type$ -- 412
+warning$ -- 22
+while$ -- 143
 width$ -- 0
-write$ -- 336
-(There were 25 warnings)
+write$ -- 320
+(There was 1 error message)
